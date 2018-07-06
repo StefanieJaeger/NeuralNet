@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<FRAME GUID="2FB25471-B62C-4EE6-BD43-F819C095ACF8" FORMAT="0000" APP_VERSION="2.2.0.8" CHECKSUM="9380FC4FAAC04021">
+  <PROJECT FORMAT="1.00" NAME="AI" AUTHOR="Stefanie" CREATED="2018.07.02 08:13:51" MODIFIED="2018.07.02 08:33:10">
+    <DIAGRAMS>
+      <DIAGRAM FORMAT="1.00" ID="0" NAME="GenAlg" CREATED="2018.07.02 08:13:58" MODIFIED="2018.07.02 08:33:10">
+        <LAYOUT FORMAT="1.00" COLUMNS="3" ROWS="12">
+          <ENTRIES>
+            <ENTRY COLUMN="0" ROW="4">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="41">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="9">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="31">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="0" ANCHOR="True">
+              <FIGURE SUBTYPE="PapTitle" FORMAT="1.00" ID="0">
+                <TEXT><![CDATA[GenAlg]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="1">
+              <FIGURE SUBTYPE="PapStart" FORMAT="1.00" ID="1">
+                <TEXT><![CDATA[Start]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="2">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="4">
+                <TEXT><![CDATA[Create population]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="3">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="6">
+                <TEXT><![CDATA[Create neural net]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="4">
+              <FIGURE SUBTYPE="PapLoopStart" FORMAT="1.00" ID="8" ASSOCIATE="10">
+                <TEXT><![CDATA[For each genome in population]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="5">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="12">
+                <TEXT><![CDATA[Test genome with input]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="6">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="14">
+                <TEXT><![CDATA[Score genome]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="7">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="16">
+                <TEXT><![CDATA[Has full fitness?]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="8">
+              <FIGURE SUBTYPE="PapLoopEnd" FORMAT="1.00" ID="10" ASSOCIATE="8">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="9">
+              <FIGURE SUBTYPE="PapModule" FORMAT="1.00" ID="20">
+                <TEXT><![CDATA[NewPopulation]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="10">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="18">
+                <TEXT><![CDATA[Save genome]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="11">
+              <FIGURE SUBTYPE="PapEnd" FORMAT="1.00" ID="2">
+                <TEXT><![CDATA[Ende]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="7">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="22">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="10">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="28">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+          </ENTRIES>
+        </LAYOUT>
+        <CONNECTIONS>
+          <CONNECTION FORMAT="1.00" ID="3" FROM="1" TO="4" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="5" FROM="4" TO="6" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="7" FROM="6" TO="8" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="11" FROM="10" TO="20" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="9" FROM="8" TO="12" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="13" FROM="12" TO="14" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="15" FROM="14" TO="16" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="17" FROM="16" TO="10" TEXT="no" />
+          <CONNECTION FORMAT="1.00" ID="19" FROM="18" TO="2" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="32" FROM="20" TO="31" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="23" FROM="16" TO="22" TEXT="yes" />
+          <CONNECTION FORMAT="1.00" ID="25" FROM="22" TO="28" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="30" FROM="28" TO="18" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="34" FROM="31" TO="41" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="43" FROM="41" TO="8" TEXT="" />
+        </CONNECTIONS>
+      </DIAGRAM>
+      <DIAGRAM FORMAT="1.00" ID="1" NAME="NewPopulation" CREATED="2018.07.02 08:17:40" MODIFIED="2018.07.02 08:17:40">
+        <LAYOUT FORMAT="1.00" COLUMNS="6" ROWS="16">
+          <ENTRIES>
+            <ENTRY COLUMN="0" ROW="3">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="63">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="0" ROW="9">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="51">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="6">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="33">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="8">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="37">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="9">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="49">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="1" ROW="13">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="43">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="0" ANCHOR="True">
+              <FIGURE SUBTYPE="PapTitle" FORMAT="1.00" ID="0">
+                <TEXT><![CDATA[NewPopulation]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="1">
+              <FIGURE SUBTYPE="PapStart" FORMAT="1.00" ID="1">
+                <TEXT><![CDATA[Start]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="2">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="4">
+                <TEXT><![CDATA[Fill roulette wheel]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="3">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="22">
+                <TEXT><![CDATA[Is new population as big as old population?]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="4">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="6">
+                <TEXT><![CDATA[Choose two genomes]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="5">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="10">
+                <TEXT><![CDATA[Is random number smaller or equal to crossover rate?]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="6">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="12">
+                <TEXT><![CDATA[make kid with random part mom, part dad, put in new population]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="7">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="24">
+                <TEXT><![CDATA[Put mom and dad into new population]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="8">
+              <FIGURE SUBTYPE="PapLoopStart" FORMAT="1.00" ID="14" ASSOCIATE="16">
+                <TEXT><![CDATA[For each chromosone in genome]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="10">
+              <FIGURE SUBTYPE="PapCondition" FORMAT="1.00" ID="18">
+                <TEXT><![CDATA[Is random number smaller or equal to mutation rate?]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="11">
+              <FIGURE SUBTYPE="PapActivity" FORMAT="1.00" ID="20">
+                <TEXT><![CDATA[Change that chromsone]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="12">
+              <FIGURE SUBTYPE="PapLoopEnd" FORMAT="1.00" ID="16" ASSOCIATE="14">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="13">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="41">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="14">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="94">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="2" ROW="15">
+              <FIGURE SUBTYPE="PapEnd" FORMAT="1.00" ID="2">
+                <TEXT><![CDATA[Ende]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="3" ROW="5">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="26">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="3" ROW="7">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="30">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="4" ROW="10">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="100">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="4" ROW="13">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="105">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="5" ROW="3">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="68">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+            <ENTRY COLUMN="5" ROW="14">
+              <FIGURE SUBTYPE="PapConnector" FORMAT="1.00" ID="90">
+                <TEXT><![CDATA[]]></TEXT>
+              </FIGURE>
+            </ENTRY>
+          </ENTRIES>
+        </LAYOUT>
+        <CONNECTIONS>
+          <CONNECTION FORMAT="1.00" ID="3" FROM="1" TO="4" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="5" FROM="4" TO="22" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="34" FROM="12" TO="33" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="7" FROM="6" TO="10" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="11" FROM="10" TO="12" TEXT="yes" />
+          <CONNECTION FORMAT="1.00" ID="40" FROM="16" TO="41" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="15" FROM="14" TO="18" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="19" FROM="18" TO="20" TEXT="yes" />
+          <CONNECTION FORMAT="1.00" ID="21" FROM="20" TO="16" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="23" FROM="22" TO="6" TEXT="no" />
+          <CONNECTION FORMAT="1.00" ID="25" FROM="24" TO="14" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="27" FROM="10" TO="26" TEXT="no" />
+          <CONNECTION FORMAT="1.00" ID="32" FROM="30" TO="24" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="29" FROM="26" TO="30" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="48" FROM="37" TO="14" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="36" FROM="33" TO="37" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="44" FROM="41" TO="43" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="45" FROM="43" TO="49" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="52" FROM="49" TO="51" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="65" FROM="63" TO="22" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="54" FROM="51" TO="63" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="71" FROM="68" TO="90" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="67" FROM="22" TO="68" TEXT="yes" />
+          <CONNECTION FORMAT="1.00" ID="96" FROM="94" TO="2" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="93" FROM="90" TO="94" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="107" FROM="105" TO="41" TEXT="" />
+          <CONNECTION FORMAT="1.00" ID="99" FROM="18" TO="100" TEXT="no" />
+          <CONNECTION FORMAT="1.00" ID="104" FROM="100" TO="105" TEXT="" />
+        </CONNECTIONS>
+      </DIAGRAM>
+    </DIAGRAMS>
+  </PROJECT>
+</FRAME>

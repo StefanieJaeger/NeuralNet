@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="14.2">
+  <zoom_level>12</zoom_level>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>192</x>
+      <y>240</y>
+      <w>192</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+Neuron
+--
+-value: double
+--
++ getValue(): double
++ calculateValue()</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>408</x>
+      <y>240</y>
+      <w>384</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>Connection
+--
+- weight: double
+- from: Neuron
+--
++ Connection(weight: double, from: Neuron)
++ calculateOutput(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>816</x>
+      <y>240</y>
+      <w>252</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+Layer
+--
+- neurons: List&lt;Neuron&gt;
+--
++ getNeurons(): List&lt;Neron&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>576</y>
+      <w>252</w>
+      <h>72</h>
+    </coordinates>
+    <panel_attributes>InputNeuron
+--
++ setValue(input: double)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>156</x>
+      <y>360</y>
+      <w>156</w>
+      <h>240</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>110.0;10.0;10.0;180.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>804</y>
+      <w>528</w>
+      <h>108</h>
+    </coordinates>
+    <panel_attributes>HiddenNeuron
+--
+- bias: double
+- incommingConnections: List&lt;Connection&gt;
+--
++ HiddenNeuron(bias: double, connections: List&lt;Connection&gt;)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>684</y>
+      <w>420</w>
+      <h>96</h>
+    </coordinates>
+    <panel_attributes>OutputNeuron
+--
+- incommingConnections: List&lt;Connection&gt;
+--
++ OutputNeuron(connections: List&lt;Connection&gt;)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>264</x>
+      <y>360</y>
+      <w>84</w>
+      <h>348</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>50.0;10.0;10.0;270.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>372</x>
+      <y>360</y>
+      <w>132</w>
+      <h>468</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;90.0;370.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>492</x>
+      <y>516</y>
+      <w>312</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>InputLayer
+--
++ InputLayer(numberOfNeurons: int)
++ setInputs(inputs: List&lt;double&gt;)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>828</x>
+      <y>516</y>
+      <w>444</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>HiddenLayer
+--
++ HiddenLayer(numberOfNeurons: int, bias: double)</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1296</x>
+      <y>516</y>
+      <w>336</w>
+      <h>84</h>
+    </coordinates>
+    <panel_attributes>OutputLayer
+--
++ OutputLayer(numberOfNeurons: int)
++ getOutputs(): List&lt;double&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1752</x>
+      <y>240</y>
+      <w>348</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>NeuralNetConfiguration
+--
++ numberOfInputNeurons: int
++ numberOfNeuronsPerHiddenLayer: int
++ numberOfOutputNeurons: int
++ numberOfHiddenLayers: int
++ bias: double
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1092</x>
+      <y>240</y>
+      <w>636</w>
+      <h>132</h>
+    </coordinates>
+    <panel_attributes>NeuralNet
+--
++ NeuralNet(configuration: NeuralNetConfiguration, weights: List&lt;Double&gt;)
+- connect()
++ calculateOutputs(inputs: List&lt;double&gt;)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>636</x>
+      <y>360</y>
+      <w>300</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>230.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>936</x>
+      <y>360</y>
+      <w>432</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>10.0;10.0;340.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>900</x>
+      <y>360</y>
+      <w>48</w>
+      <h>180</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-</panel_attributes>
+    <additional_attributes>20.0;10.0;10.0;130.0</additional_attributes>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1716</x>
+      <y>516</y>
+      <w>252</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>GenAlgorithm
+--
+- population: List&lt;Genome&gt;
+- newPopulation: List&lt;Genome&gt;
+- generationCount: int
+- crossoverRate: double
+- mutationRate: double
+- network: NeuralNet
+--
++ GenAlgorithm(network: NeuralNet, crossoverRate: double, mutationRate: double)
+- populateRouletteWheel()
+- chooseMomAndDad()
+- makeBabies()
+- mutate()
+- crossover()
++ getOutputs(inputs: List&lt;Double&gt;, outputs: List&lt;Double&gt;)
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1452</x>
+      <y>672</y>
+      <w>252</w>
+      <h>228</h>
+    </coordinates>
+    <panel_attributes>Genome
+--
+- fitness: double
+--
++ getFitness(): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>
