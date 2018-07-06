@@ -14,16 +14,30 @@ import java.util.List;
 public class Genome {
     private double fitness;
     private List<Double> chromosones;
+    private String name;
     
-    public Genome(){
+    public Genome(List<Double> chromosones, String name){
+    this.chromosones = chromosones;
+    this.name = name;
+    }
     
+    public String getName(){
+        return name;
     }
     
     public double getFitness(){
         return fitness;
     }
     
+    public void setFitness(double score){
+        fitness = score;
+    }
+    
     public List<Double> getDNA(){
         return this.chromosones;
+    }
+    
+    public void setDNA(List<Double> dna){
+        chromosones = dna;
     }
 }
