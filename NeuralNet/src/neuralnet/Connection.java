@@ -19,7 +19,7 @@ public class Connection {
     }
     
     public double calculateOutput(){
-        double x = weight + from.getValue();
+        double x = weight * from.getValue();
         double result = 1 / (1 + Math.exp(-x));
         return result;
     }

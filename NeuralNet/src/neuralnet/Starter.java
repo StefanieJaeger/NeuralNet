@@ -31,7 +31,7 @@ public class Starter {
         List<Double> inputs = Arrays.asList(1.0,0.0);
         List<Double> expOutputs = Arrays.asList(1.0);
         
-        GenomeAlgorithm genAlg = new GenomeAlgorithm(net, 0.7, 0.1, 10, 9);
+        GeneticAlgorithm genAlg = new GeneticAlgorithm(net, 0.7, 0.1, 10, 9);
                 
         genAlg.testPopulation(inputs, expOutputs);
         

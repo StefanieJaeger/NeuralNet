@@ -13,7 +13,7 @@ import java.util.Random;
  *
  * @author Stefanie
  */
-public class GenomeAlgorithm {
+public class GeneticAlgorithm {
     private List<Genome> population;
     private List<Genome> newPopulation;
     private int generationCount = 1;
@@ -22,7 +22,7 @@ public class GenomeAlgorithm {
     private NeuralNet network;
     private List<Genome> rouletteWheel;
     
-    public GenomeAlgorithm(NeuralNet network, double crossoverRate, double mutationRate, int populationSize, int chromoLenght){
+    public GeneticAlgorithm(NeuralNet network, double crossoverRate, double mutationRate, int populationSize, int chromoLenght){
         this.network = network;
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
