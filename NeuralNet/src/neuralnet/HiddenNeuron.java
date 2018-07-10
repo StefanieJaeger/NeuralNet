@@ -22,4 +22,18 @@ public class HiddenNeuron extends Neuron {
     public void addConnections(List<Connection> connections){    
         this.incommingConnections = connections;
     }
+    
+    public List<Connection> getConnections(){
+        return this.incommingConnections;
+    }
+    
+    @Override
+    public void calculateValue(){
+        double e = 0;
+        int xw = 0;
+        for(Connection c : incommingConnections)
+            xw+=c.getWeight() * c.getInputValue();
+        e = xw-bias;
+        value = 1 / (1 + Math.exp(e * -1));
+    }
 }

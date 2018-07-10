@@ -23,4 +23,12 @@ public class Connection {
         double result = 1 / (1 + Math.exp(-x));
         return result;
     }
+    
+    public double getWeight() {
+        return weight;
+    }
+    
+    public double getInputValue(){
+        return from.getValue();
+    }
 }

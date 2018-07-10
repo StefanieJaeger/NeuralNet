@@ -6,6 +6,7 @@
 package neuralnet;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -24,15 +25,16 @@ public class Starter {
         config.numberOfOutputNeurons = 1;
         config.numberOfHiddenLayers = 1;
         config.numberOfNeuronsPerHiddenLayer = 3;
-        config.bias = 0;
-        List<Double> weights = new ArrayList<>();
+        config.bias = 1;
         NeuralNet net = new NeuralNet(config);
         
-        List<Double> inputs = new ArrayList<>();
-        List<Double> expOutputs = new ArrayList<>();
+        List<Double> inputs = Arrays.asList(1.0,0.0);
+        List<Double> expOutputs = Arrays.asList(1.0);
         
-        GenomeAlgorithm genAlg = new GenomeAlgorithm(net, 0, 0, 10, 5);
+        GenomeAlgorithm genAlg = new GenomeAlgorithm(net, 0.7, 0.1, 10, 9);
+                
         genAlg.testPopulation(inputs, expOutputs);
+        
         
         
     }

@@ -26,6 +26,7 @@ public class GenomeAlgorithm {
         this.network = network;
         this.crossoverRate = crossoverRate;
         this.mutationRate = mutationRate;
+        this.population = new ArrayList<>();
         makeGeneration(populationSize, chromoLenght);
     }
     
@@ -42,7 +43,7 @@ public class GenomeAlgorithm {
     }
     
     public void makeNextGeneration(){
-    newPopulation.clear();
+    newPopulation = new ArrayList<>();
     populateRouletteWheel();
     
     while(newPopulation.size() < population.size()){
@@ -106,11 +107,12 @@ public class GenomeAlgorithm {
             network.calculateOutputs(inputs);
             List<Double> outputs = network.outputs;
             scoreGenome(gen, expOutputs, outputs);
+        network.printNet();
         }
     }
     
     private void scoreGenome(Genome gen, List<Double> expOutputs, List<Double> actOutputs){
-        if(expOutputs == actOutputs){
+        if(expOutputs.equals(actOutputs)){
             gen.setFitness(gen.getFitness()+1);
         }
         System.out.println("Genome " + gen.getName() + ", with dna " + gen.getDNA().toString() + " has fitness " + gen.getFitness());
