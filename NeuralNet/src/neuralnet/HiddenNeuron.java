@@ -31,8 +31,9 @@ public class HiddenNeuron extends Neuron {
     public void calculateValue(){
         double e;
         int xw = 0;
+        //Sigmoid
         for(Connection c : incommingConnections)
-            xw+=c.getWeight() * c.getInputValue();
+            xw+=c.calculateOutput();
         e = xw-bias;
         value = 1 / (1 + Math.exp(e * -1));
     }

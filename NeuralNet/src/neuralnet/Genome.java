@@ -25,6 +25,7 @@ public class Genome {
         return name;
     }
     
+    //says how close the value calculated with these weights got to the expected result
     public double getFitness(){
         return fitness;
     }

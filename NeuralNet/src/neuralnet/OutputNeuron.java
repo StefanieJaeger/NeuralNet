@@ -30,8 +30,9 @@ public class OutputNeuron extends Neuron {
     public void calculateValue(){
         double e = 0;
         int xw = 0;
+        //Sigmoid
         for(Connection c : incommingConnections)
-            xw+=c.getWeight() * c.getInputValue();
+            xw+=c.calculateOutput();
         e = xw;
         value = 1 / (1 + Math.exp(e * -1));
     }
