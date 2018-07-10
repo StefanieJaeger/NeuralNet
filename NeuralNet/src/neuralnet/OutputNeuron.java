@@ -15,11 +15,11 @@ public class OutputNeuron extends Neuron {
     private List<Connection> incommingConnections;
     
     public OutputNeuron(){
+        
     }
     
     public void addConnections(List<Connection> connections){
-        this.incommingConnections = connections;
-    
+        this.incommingConnections = connections; 
     }
     
     public List<Connection> getConnections(){

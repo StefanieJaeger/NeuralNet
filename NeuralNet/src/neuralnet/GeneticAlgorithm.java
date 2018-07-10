@@ -43,50 +43,48 @@ public class GeneticAlgorithm {
     }
     
     public void makeNextGeneration(){
-    newPopulation = new ArrayList<>();
-    populateRouletteWheel();
+        newPopulation = new ArrayList<>();
+        populateRouletteWheel();
     
-    while(newPopulation.size() < population.size()){
-        List<Genome> parents = getMomAndDad();
-        makeBabies(parents.get(0), parents.get(1));
-    }
-    generationCount++;
-    population = newPopulation;
-    
+        while(newPopulation.size() < population.size()){
+            List<Genome> parents = getMomAndDad();
+            makeBabies(parents.get(0), parents.get(1));
+        }
+        generationCount++;
+        population = newPopulation;    
     }
     
     private void populateRouletteWheel(){
-    rouletteWheel = new ArrayList<>();
-        for(Genome pop : population){
-        for(int i = 0; i < pop.getFitness(); i++){
-            rouletteWheel.add(pop);
-        }
-    }
+        rouletteWheel = new ArrayList<>();
+            for(Genome pop : population){
+                for(int i = 0; i < pop.getFitness(); i++)
+                    rouletteWheel.add(pop);
+            }
     }
     
     private List<Genome> getMomAndDad(){
-    Random ran = new Random();
-    List<Genome> parents = new ArrayList<>();
-    parents.add(rouletteWheel.get(ran.nextInt(rouletteWheel.size())));
-    parents.add(rouletteWheel.get(ran.nextInt(rouletteWheel.size())));
-    return parents;
+        Random ran = new Random();
+        List<Genome> parents = new ArrayList<>();
+        parents.add(rouletteWheel.get(ran.nextInt(rouletteWheel.size())));
+        parents.add(rouletteWheel.get(ran.nextInt(rouletteWheel.size())));
+        return parents;
     }
     
     private void makeBabies(Genome mom, Genome dad){
         Random ran = new Random();
         if(crossoverRate >= ran.nextDouble()){
-        int index = ran.nextInt(rouletteWheel.size());
-        List<Double> dna1 = mom.getDNA().subList(0, index-1);
-        List<Double> dna2 = dad.getDNA().subList(index, dad.getDNA().size());
-        dna1.addAll(dad.getDNA().subList(0, index-1));
-        dna2.addAll(mom.getDNA().subList(index, mom.getDNA().size()));
-        Genome kid1 = new Genome(dna1, "generation " + (generationCount+1) + ", member " + newPopulation.size()+1);
-        Genome kid2 = new Genome(dna2, "generation " + (generationCount+1) + ", member " + newPopulation.size()+2);        
-        kid1 = mutate(kid1);
-        kid2 = mutate(kid2);
+            int index = ran.nextInt(rouletteWheel.size());
+            List<Double> dna1 = mom.getDNA().subList(0, index-1);
+            List<Double> dna2 = dad.getDNA().subList(index, dad.getDNA().size());
+            dna1.addAll(dad.getDNA().subList(0, index-1));
+            dna2.addAll(mom.getDNA().subList(index, mom.getDNA().size()));
+            Genome kid1 = new Genome(dna1, "generation " + (generationCount+1) + ", member " + newPopulation.size()+1);
+            Genome kid2 = new Genome(dna2, "generation " + (generationCount+1) + ", member " + newPopulation.size()+2);        
+            kid1 = mutate(kid1);
+            kid2 = mutate(kid2);
         
-        newPopulation.add(kid1);
-        newPopulation.add(kid2);
+            newPopulation.add(kid1);
+            newPopulation.add(kid2);
         } else {
             newPopulation.add(mom);
             newPopulation.add(dad);
@@ -107,14 +105,13 @@ public class GeneticAlgorithm {
             network.calculateOutputs(inputs);
             List<Double> outputs = network.outputs;
             scoreGenome(gen, expOutputs, outputs);
-        network.printNet();
+            network.printNet();
         }
     }
     
     private void scoreGenome(Genome gen, List<Double> expOutputs, List<Double> actOutputs){
-        if(expOutputs.equals(actOutputs)){
+        if(expOutputs.equals(actOutputs))
             gen.setFitness(gen.getFitness()+1);
-        }
         System.out.println("Genome " + gen.getName() + ", with dna " + gen.getDNA().toString() + " has fitness " + gen.getFitness());
     }
 }

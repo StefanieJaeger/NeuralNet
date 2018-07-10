@@ -29,7 +29,7 @@ public class HiddenNeuron extends Neuron {
     
     @Override
     public void calculateValue(){
-        double e = 0;
+        double e;
         int xw = 0;
         for(Connection c : incommingConnections)
             xw+=c.getWeight() * c.getInputValue();

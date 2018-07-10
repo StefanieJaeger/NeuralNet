@@ -17,8 +17,8 @@ public class Genome {
     private String name;
     
     public Genome(List<Double> chromosones, String name){
-    this.chromosones = chromosones;
-    this.name = name;
+        this.chromosones = chromosones;
+        this.name = name;
     }
     
     public String getName(){

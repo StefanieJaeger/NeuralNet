@@ -22,7 +22,7 @@ public class OutputLayer extends Layer {
     public List<Double> getOutputs(){
         List<Double> outputs = new ArrayList<>();
         for(Neuron neuron : neurons)
-        outputs.add(neuron.getValue());
+            outputs.add(neuron.getValue());
         return outputs;
     }
 }

@@ -21,4 +21,4 @@ public abstract class Neuron {
     public void calculateValue(){
         
     }
-    }
+}

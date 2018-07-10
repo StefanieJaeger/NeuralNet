@@ -28,9 +28,7 @@ public class NeuralNet {
             layers.add(new HiddenLayer(configuration.numberOfNeuronsPerHiddenLayer, configuration.bias));
         }
         
-        layers.add(new OutputLayer(configuration.numberOfOutputNeurons));
-        
-        //connect();
+        layers.add(new OutputLayer(configuration.numberOfOutputNeurons));        
     }
     
     public void setWeights(List<Double> w){
@@ -43,17 +41,13 @@ public class NeuralNet {
         for(int i = 1; i < layers.size(); i++){
             List<Connection> connections = new ArrayList<>();
             if(i != layers.size()-1){
-            HiddenLayer layer = (HiddenLayer)layers.get(i);
+                HiddenLayer layer = (HiddenLayer)layers.get(i);
             
             for(int j =0; j < layers.get(i-1).getNeurons().size(); j++){
                 connections.add(new Connection(weights.get(0),layers.get(i-1).getNeurons().get(j)));
                 weights.remove(0);
             }
             
-            /*for(int j = 0; j < configuration.numberOfInputNeurons; j++){
-                connections.add(new Connection(weights.get(0),layers.get(0).getNeurons().get(j)));
-                weights.remove(0);
-            }*/
             layer.getNeurons().forEach(k->{
                 HiddenNeuron neuron = (HiddenNeuron)k;
                 neuron.addConnections(connections);
@@ -67,9 +61,6 @@ public class NeuralNet {
                     weights.remove(0);
                 }
                 
-                /*for(int j = 0; j < configuration.numberOfNeuronsPerHiddenLayer; j++){
-
-                }*/
                 layer2.getNeurons().forEach(k->{
                     OutputNeuron neuron = (OutputNeuron)k;
                     neuron.addConnections(connections);
@@ -95,10 +86,10 @@ public class NeuralNet {
             String s1 = "";
             String s2 ="";
             for(int i = 0; i <layers.get(j).getNeurons().size(); i++){
-            HiddenNeuron h = (HiddenNeuron)layers.get(j).getNeurons().get(i);
-            for(Connection c : h.getConnections())
-                s1 += connection + c.getWeight() + ") ";
-            s2 += neuron + h.getValue() + ") ";
+                HiddenNeuron h = (HiddenNeuron)layers.get(j).getNeurons().get(i);
+                for(Connection c : h.getConnections())
+                    s1 += connection + c.getWeight() + ") ";
+                s2 += neuron + h.getValue() + ") ";
             }
             cons.add(s1);
             hidden.add(s2);
