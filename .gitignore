@@ -1,2 +1,4 @@
 /NeuralNet/nbproject/private/
 /NeuralNet/build/
+*.iml
+.idea
