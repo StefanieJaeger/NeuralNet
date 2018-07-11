@@ -1,4 +1,12 @@
-package com.github.stefaniejaeger.neuralnet;
+package com.github.stefaniejaeger.neuralnet.network;
+
+import com.github.stefaniejaeger.neuralnet.network.layer.HiddenLayer;
+import com.github.stefaniejaeger.neuralnet.network.layer.InputLayer;
+import com.github.stefaniejaeger.neuralnet.network.layer.Layer;
+import com.github.stefaniejaeger.neuralnet.network.layer.OutputLayer;
+import com.github.stefaniejaeger.neuralnet.network.neuron.HiddenNeuron;
+import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
+import com.github.stefaniejaeger.neuralnet.network.neuron.OutputNeuron;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +34,7 @@ public class NeuralNet {
         }
         
         //create output layer
-        layers.add(new OutputLayer(configuration.numberOfOutputNeurons));        
+        layers.add(new OutputLayer(configuration.numberOfOutputNeurons));
     }
     
     public void setWeights(List<Double> w){

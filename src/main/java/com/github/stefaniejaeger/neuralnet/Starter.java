@@ -1,5 +1,9 @@
 package com.github.stefaniejaeger.neuralnet;
 
+import com.github.stefaniejaeger.neuralnet.algorithm.GeneticAlgorithm;
+import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
+import com.github.stefaniejaeger.neuralnet.network.NeuralNetConfiguration;
+
 import java.util.Arrays;
 import java.util.List;
 

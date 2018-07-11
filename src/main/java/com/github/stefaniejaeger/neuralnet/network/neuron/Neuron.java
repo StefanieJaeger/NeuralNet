@@ -1,19 +1,17 @@
-package com.github.stefaniejaeger.neuralnet;
+package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 /**
  *
  * @author Stefanie
  */
 public abstract class Neuron {
-    public double value = -1;    
+    public Double value = null;
     
     public double getValue(){
-        if(value == -1)
+        if(value == null)
             calculateValue();
         return this.value;            
     }
     
-    public void calculateValue(){
-        
-    }
+    public abstract void calculateValue();
 }

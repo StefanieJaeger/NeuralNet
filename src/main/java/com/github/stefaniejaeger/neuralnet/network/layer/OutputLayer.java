@@ -1,4 +1,7 @@
-package com.github.stefaniejaeger.neuralnet;
+package com.github.stefaniejaeger.neuralnet.network.layer;
+
+import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
+import com.github.stefaniejaeger.neuralnet.network.neuron.OutputNeuron;
 
 import java.util.ArrayList;
 import java.util.List;

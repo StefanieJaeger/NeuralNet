@@ -1,4 +1,6 @@
-package com.github.stefaniejaeger.neuralnet;
+package com.github.stefaniejaeger.neuralnet.network;
+
+import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
 
 /**
  *
@@ -14,16 +16,15 @@ public class Connection {
     }
     
     public double calculateOutput(){
-        double x = weight * from.getValue();
-        double result = 1 / (1 + Math.exp(-x));
-        return result;
+        return weight * from.getValue();
     }
     
     public double getWeight() {
         return weight;
     }
-    
-    public double getInputValue(){
-        return from.getValue();
+
+    @Override
+    public String toString() {
+        return "connection from " + from.toString() + " with weight " + weight;
     }
 }

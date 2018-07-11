@@ -1,4 +1,4 @@
-package com.github.stefaniejaeger.neuralnet;
+package com.github.stefaniejaeger.neuralnet.algorithm;
 
 import java.util.List;
 
@@ -8,16 +8,10 @@ import java.util.List;
  */
 public class Genome {
     private double fitness;
-    private List<Double> chromosones;
-    private String name;
+    private List<Double> chromosomes;
     
-    public Genome(List<Double> chromosones, String name){
-        this.chromosones = chromosones;
-        this.name = name;
-    }
-    
-    public String getName(){
-        return name;
+    public Genome(List<Double> chromosomes){
+        this.chromosomes = chromosomes;
     }
     
     //says how close the value calculated with these weights got to the expected result
@@ -30,10 +24,10 @@ public class Genome {
     }
     
     public List<Double> getDNA(){
-        return this.chromosones;
+        return this.chromosomes;
     }
     
     public void setDNA(List<Double> dna){
-        chromosones = dna;
+        chromosomes = dna;
     }
 }

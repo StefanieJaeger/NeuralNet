@@ -1,4 +1,6 @@
-package com.github.stefaniejaeger.neuralnet;
+package com.github.stefaniejaeger.neuralnet.network.neuron;
+
+import com.github.stefaniejaeger.neuralnet.network.Connection;
 
 import java.util.List;
 
