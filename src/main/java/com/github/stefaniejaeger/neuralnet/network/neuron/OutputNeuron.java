@@ -15,6 +15,7 @@ public class OutputNeuron extends Neuron {
         
     }
     
+    @Override
     public void addConnections(List<Connection> connections){
         this.incommingConnections = connections; 
     }
@@ -32,5 +33,14 @@ public class OutputNeuron extends Neuron {
             xw+=c.calculateOutput();
         e = xw;
         value = 1 / (1 + Math.exp(e * -1));
+    }
+    
+    @Override
+    public String toString() {
+        String text = "output neuron has ";
+        for(Connection con : incommingConnections)
+            text += con.toString() + ", ";
+        text += " making its value " + getValue();
+        return text;
     }
 }

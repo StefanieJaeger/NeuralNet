@@ -1,6 +1,7 @@
 package com.github.stefaniejaeger.neuralnet;
 
 import com.github.stefaniejaeger.neuralnet.algorithm.GeneticAlgorithm;
+import com.github.stefaniejaeger.neuralnet.algorithm.GeneticAlgorithmConfiguration;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNetConfiguration;
 
@@ -18,20 +19,27 @@ public class Starter {
      */
     public static void main(String[] args) {
         //configurate the neural net structure
-        NeuralNetConfiguration config = new NeuralNetConfiguration();
-        config.numberOfInputNeurons = 2;
-        config.numberOfOutputNeurons = 1;
-        config.numberOfHiddenLayers = 1;
-        config.numberOfNeuronsPerHiddenLayer = 3;
-        config.bias = 1;
-        NeuralNet net = new NeuralNet(config);
+        NeuralNetConfiguration netConfig = new NeuralNetConfiguration();
+        netConfig.numberOfInputNeurons = 2;
+        netConfig.numberOfOutputNeurons = 1;
+        netConfig.numberOfHiddenLayers = 1;
+        netConfig.numberOfNeuronsPerHiddenLayer = 3;
+        netConfig.bias = 1;
+        NeuralNet net = new NeuralNet(netConfig);
+        
+        GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
+        algConfig.chromosomeLengthOfGenome = 9;
+        algConfig.crossoverRate = 0.7;
+        algConfig.mutationRate = 0.1;
+        algConfig.neuralNet = net;
+        algConfig.populationSize = 10;
         
         //inputs and expected outputs
         List<Double> inputs = Arrays.asList(1.0,0.0);
         List<Double> expOutputs = Arrays.asList(1.0);
         
         //genetic alogrithm with crossoverRate 0.7, mutationRate 0.1, population count 10 and chromosone count per genome
-        GeneticAlgorithm genAlg = new GeneticAlgorithm(net, 0.7, 0.1, 10, 9);
+        GeneticAlgorithm genAlg = new GeneticAlgorithm(algConfig);
         
         //test, score and print the genomes and neural net
         genAlg.testPrintAndScorePopulation(inputs, expOutputs);

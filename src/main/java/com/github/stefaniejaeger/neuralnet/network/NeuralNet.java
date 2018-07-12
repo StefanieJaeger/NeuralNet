@@ -43,20 +43,22 @@ public class NeuralNet {
     }
     
     private void connect(){
+        List<Layer> layers = this.layers;
         List<Connection> connections = new ArrayList<>();
+        int weightCounter = weights.size()-1;
         //go through all hidden layers
         for(int i = 1; i < layers.size()-1; i++){
             //add a connection for each neuron in the previous layer to each neuron in the current one
             for(int k = 0; k< layers.get(i).getNeurons().size(); k++){   
                 
                 for(int j =0; j < layers.get(i-1).getNeurons().size(); j++){
-                    connections.add(new Connection(weights.get(0),layers.get(i-1).getNeurons().get(j)));
-                    weights.remove(0);
+                    connections.add(new Connection(weights.get(weightCounter),layers.get(i-1).getNeurons().get(j)));
+                    weightCounter = weightCounter-1;
                 }
             
-                HiddenNeuron hiddenNeuron = (HiddenNeuron)layers.get(i).getNeurons().get(k);
-                hiddenNeuron.addConnections(connections);            
-                connections.clear();
+                layers.get(i).getNeurons().get(k).addConnections(connections);
+                //hiddenNeuron.getConnections().forEach(f-> System.out.println(f.toString()));
+                connections = new ArrayList<>();
             }
         }
         //output layer
@@ -64,14 +66,22 @@ public class NeuralNet {
         for(int k = 0; k < layers.get(index).getNeurons().size(); k++){
             //add a connection for each neuron in the previous layer to each neuron in the current one
             for(int j =0; j < layers.get(index-1).getNeurons().size(); j++){
-                connections.add(new Connection(weights.get(0), layers.get(index-1).getNeurons().get(j)));
-                weights.remove(0);
+                connections.add(new Connection(weights.get(weightCounter), layers.get(index-1).getNeurons().get(j)));
+                weightCounter = weightCounter-1;
             }
-            
-            OutputNeuron outputNeuron = (OutputNeuron)layers.get(index).getNeurons().get(k);
-            outputNeuron.addConnections(connections);            
-            connections.clear();
-        }        
+             
+            layers.get(index).getNeurons().get(k).addConnections(connections);       
+            connections = new ArrayList<>();
+        }
+        this.layers = layers;        
+    }
+    
+    @Override
+    public String toString(){
+        String text = "NEURAL NET STRUCTURE: " + '\n' + '\t';
+        for(Layer layer : layers)
+            text += layer.toString() + '\n' + '\t';
+        return text;
     }
     
     public void printNet(){

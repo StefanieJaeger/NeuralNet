@@ -15,4 +15,12 @@ public abstract class Layer {
     public List<Neuron> getNeurons(){
         return this.neurons;
     }
+    
+    @Override
+    public String toString(){
+        String sNeurons = "";
+        for(Neuron neuron : this.neurons)
+            sNeurons += neuron.toString() + " ";
+        return "Layer contains " + this.neurons.size() + " neurons: " + sNeurons;
+    }
 }

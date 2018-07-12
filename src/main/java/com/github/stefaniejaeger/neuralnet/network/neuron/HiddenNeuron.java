@@ -16,6 +16,7 @@ public class HiddenNeuron extends Neuron {
         this.bias = bias;
     }
     
+    @Override
     public void addConnections(List<Connection> connections){    
         this.incommingConnections = connections;
     }
@@ -33,5 +34,14 @@ public class HiddenNeuron extends Neuron {
             xw+=c.calculateOutput();
         e = xw-bias;
         value = 1 / (1 + Math.exp(e * -1));
+    }
+
+    @Override
+    public String toString() {
+        String text = "hidden neuron with ";
+        for(Connection con : incommingConnections)
+            text += con.toString() + ", ";
+        text += "has bias " + bias + " making its value " + getValue();
+        return text;
     }
 }

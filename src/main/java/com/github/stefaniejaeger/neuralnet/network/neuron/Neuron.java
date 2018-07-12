@@ -1,5 +1,8 @@
 package com.github.stefaniejaeger.neuralnet.network.neuron;
 
+import com.github.stefaniejaeger.neuralnet.network.Connection;
+import java.util.List;
+
 /**
  *
  * @author Stefanie
@@ -14,4 +17,8 @@ public abstract class Neuron {
     }
     
     public abstract void calculateValue();
+    
+    public abstract String toString();
+    
+    public abstract void addConnections(List<Connection> cons);
 }

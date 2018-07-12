@@ -8,10 +8,10 @@ import java.util.List;
  */
 public class Genome {
     private double fitness;
-    private List<Double> chromosomes;
+    private Chromosome chromosome;
     
-    public Genome(List<Double> chromosomes){
-        this.chromosomes = chromosomes;
+    public Genome(Chromosome chromosome){
+        this.chromosome = chromosome;
     }
     
     //says how close the value calculated with these weights got to the expected result
@@ -24,10 +24,19 @@ public class Genome {
     }
     
     public List<Double> getDNA(){
-        return this.chromosomes;
+        return chromosome.dna;
     }
     
     public void setDNA(List<Double> dna){
-        chromosomes = dna;
+        chromosome.dna = dna;
+    }
+    
+    public void addToDNA(List<Double> dna){
+        chromosome.dna.addAll(dna);
+    }
+    
+    @Override
+    public String toString(){
+        return "has fitness " + fitness + " and dna " + chromosome.toString();
     }
 }

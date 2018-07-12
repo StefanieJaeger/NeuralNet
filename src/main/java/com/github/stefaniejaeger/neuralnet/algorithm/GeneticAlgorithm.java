@@ -17,26 +17,28 @@ public class GeneticAlgorithm {
     private double mutationRate;
     private NeuralNet network;
     private List<Genome> rouletteWheel;
+    private List<Genome> winner;
 
-    public GeneticAlgorithm(NeuralNet network, double crossoverRate, double mutationRate, int populationSize, int chromosomeLength) {
-        this.network = network;
-        this.crossoverRate = crossoverRate;
-        this.mutationRate = mutationRate;
+    public GeneticAlgorithm(GeneticAlgorithmConfiguration geneticAlgorithmConfiguration) {
+        this.network = geneticAlgorithmConfiguration.neuralNet;
+        this.crossoverRate = geneticAlgorithmConfiguration.crossoverRate;
+        this.mutationRate = geneticAlgorithmConfiguration.mutationRate;
         this.population = new ArrayList<>();
+        this.winner = new ArrayList<>();
         //create the first generation
-        makeGeneration(populationSize, chromosomeLength);
+        makeGeneration(geneticAlgorithmConfiguration.populationSize, geneticAlgorithmConfiguration.chromosomeLengthOfGenome);
     }
 
     private void makeGeneration(int size, int chromosomeLength) {
         Random ran = new Random();
         for (int i = 0; i < size; i++) {
-            List<Double> dna = new ArrayList<>();
+            Chromosome chromo = new Chromosome(new ArrayList<Double>());
             //populate the DNA with random doubles
             for (int j = 0; j < chromosomeLength; j++) {
-                dna.add(ran.nextDouble());
+                chromo.dna.add(ran.nextDouble());
             }
             //create the genome with DNA and name
-            Genome gen = new Genome(dna);
+            Genome gen = new Genome(chromo);
             population.add(gen);
         }
     }
@@ -86,14 +88,14 @@ public class GeneticAlgorithm {
         int index = ran.nextInt(mom.getDNA().size());
 
         //take random amount from mom's and dad's DNA for kids' DNA
-        List<Double> dna1 = mom.getDNA().subList(0, index - 1);
-        List<Double> dna2 = dad.getDNA().subList(0, index - 1);
-        dna1.addAll(dad.getDNA().subList(index, dad.getDNA().size()));
-        dna2.addAll(mom.getDNA().subList(index, mom.getDNA().size()));
+        Chromosome chromo1 = new Chromosome(mom.getDNA().subList(0, index - 1));
+        Chromosome chromo2 = new Chromosome(dad.getDNA().subList(0, index - 1));
+        chromo1.dna.addAll(dad.getDNA().subList(index, dad.getDNA().size()));
+        chromo2.dna.addAll(mom.getDNA().subList(index, mom.getDNA().size()));
 
         //Create new genomes with DNA and name
-        Genome kid1 = new Genome(dna1);
-        Genome kid2 = new Genome(dna2);
+        Genome kid1 = new Genome(chromo1);
+        Genome kid2 = new Genome(chromo2);
 
         //Try to mutate kids to get some diversity
         kid1 = mutate(kid1);
@@ -126,9 +128,11 @@ public class GeneticAlgorithm {
             //set fitness of member
             scoreGenome(gen, expOutputs, outputs);
             //print out structure and values in neural net for this member
-            network.printNet();
+            //network.printNet();
             //print test results
-            System.out.println("Genome Generation " + generationCount +", Member " + genomeCountr + ", with dna " + gen.getDNA().toString() + " has fitness " + gen.getFitness());
+            System.out.println("Genome Generation " + generationCount +", Member " + genomeCountr + " " + gen.toString());
+            System.out.println(network.toString());
+            genomeCountr++;
         }
     }
 
@@ -143,7 +147,9 @@ public class GeneticAlgorithm {
 
     private void scoreGenome(Genome gen, List<Double> expOutputs, List<Double> actOutputs) {
         //if output guess correctly, increase fitness by 1
-        if (expOutputs.equals(actOutputs))
+        if (expOutputs.equals(actOutputs)){
             gen.setFitness(gen.getFitness() + 1);
+            winner.add(gen);
+        }
     }
 }

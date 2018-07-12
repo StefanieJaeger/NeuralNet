@@ -2,3 +2,4 @@
 /NeuralNet/build/
 *.iml
 .idea
+/target/
