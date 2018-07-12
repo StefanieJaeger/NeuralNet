@@ -133,7 +133,8 @@ public class NeuralNet {
         InputLayer input = (InputLayer)layers.get(0);
         input.setInputs(inputs);
         OutputLayer output = (OutputLayer)layers.get(layers.size()-1);
+        output.neurons.get(0).calculateValue();
         outputs = output.getOutputs();
-        outputs.forEach(e->Math.round(e));
+        //outputs.forEach(e->Math.round(e));
     }
 }

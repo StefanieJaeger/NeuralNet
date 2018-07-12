@@ -136,6 +136,21 @@ public class GeneticAlgorithm {
         }
     }
 
+    public void testAndScorePopulation(List<Double> inputs, List<Double> expOutputs) {
+    int genomeCountr = 0;
+        for (Genome gen : population) {
+            testGenome(gen, inputs);
+            List<Double> outputs = network.outputs;
+            //set fitness of member
+            scoreGenome(gen, expOutputs, outputs);
+            //print out structure and values in neural net for this member
+            //network.printNet();
+            //print test results
+            genomeCountr++;
+        }
+    }
+    
+    
     //TODO better name
     private void testGenome(Genome gen, List<Double> inputs) {
         //set the network values for the member
@@ -151,5 +166,9 @@ public class GeneticAlgorithm {
             gen.setFitness(gen.getFitness() + 1);
             winner.add(gen);
         }
+    }
+    
+    public boolean isDone(){
+        return winner.size() >=1;
     }
 }

@@ -21,6 +21,6 @@ public abstract class Layer {
         String sNeurons = "";
         for(Neuron neuron : this.neurons)
             sNeurons += neuron.toString() + " ";
-        return "Layer contains " + this.neurons.size() + " neurons: " + sNeurons;
+        return "Layer contains " + this.neurons.size() + " neurons: " + '\n' + '\t' + sNeurons;
     }
 }

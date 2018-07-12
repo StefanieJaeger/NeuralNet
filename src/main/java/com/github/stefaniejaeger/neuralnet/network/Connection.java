@@ -25,6 +25,6 @@ public class Connection {
 
     @Override
     public String toString() {
-        return "connection from " + from.toString() + " with weight " + weight;
+        return "connection from " + from.toString() + " and weight " + weight;
     }
 }

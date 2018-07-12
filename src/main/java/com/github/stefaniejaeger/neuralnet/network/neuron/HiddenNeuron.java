@@ -28,7 +28,7 @@ public class HiddenNeuron extends Neuron {
     @Override
     public void calculateValue(){
         double e;
-        int xw = 0;
+        double xw = 0;
         //Sigmoid
         for(Connection c : incommingConnections)
             xw+=c.calculateOutput();

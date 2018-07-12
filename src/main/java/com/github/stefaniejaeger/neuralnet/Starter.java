@@ -24,27 +24,41 @@ public class Starter {
         netConfig.numberOfOutputNeurons = 1;
         netConfig.numberOfHiddenLayers = 1;
         netConfig.numberOfNeuronsPerHiddenLayer = 3;
-        netConfig.bias = 1;
+        netConfig.bias = 2;
         NeuralNet net = new NeuralNet(netConfig);
         
         GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
         algConfig.chromosomeLengthOfGenome = 9;
         algConfig.crossoverRate = 0.7;
-        algConfig.mutationRate = 0.1;
+        algConfig.mutationRate = 0.15;
         algConfig.neuralNet = net;
-        algConfig.populationSize = 10;
+        algConfig.populationSize = 5;
         
         //inputs and expected outputs
-        List<Double> inputs = Arrays.asList(1.0,0.0);
-        List<Double> expOutputs = Arrays.asList(1.0);
+        List<Double> inputs1 = Arrays.asList(0.0,0.0);
+        List<Double> expOutputs1 = Arrays.asList(1.0);
+        List<Double> inputs2 = Arrays.asList(0.0,1.0);
+        List<Double> expOutputs2 = Arrays.asList(0.0);
+        List<Double> inputs3 = Arrays.asList(1.0,0.0);
+        List<Double> expOutputs3 = Arrays.asList(0.0);
+        List<Double> inputs4 = Arrays.asList(1.0,1.0);
+        List<Double> expOutputs4 = Arrays.asList(1.0);
         
         //genetic alogrithm with crossoverRate 0.7, mutationRate 0.1, population count 10 and chromosone count per genome
         GeneticAlgorithm genAlg = new GeneticAlgorithm(algConfig);
         
         //test, score and print the genomes and neural net
-        genAlg.testPrintAndScorePopulation(inputs, expOutputs);
+        genAlg.testPrintAndScorePopulation(inputs1, expOutputs1);
+        genAlg.testPrintAndScorePopulation(inputs2, expOutputs2);
+        genAlg.testPrintAndScorePopulation(inputs3, expOutputs3);
+        genAlg.testPrintAndScorePopulation(inputs4, expOutputs4);
         
-        
+        /*int countr = 0;
+        while(!genAlg.isDone() || countr < 10){
+            genAlg.makeNextGeneration();
+            genAlg.testPrintAndScorePopulation(inputs, expOutputs);
+            countr++;
+        }*/
         
     }
     

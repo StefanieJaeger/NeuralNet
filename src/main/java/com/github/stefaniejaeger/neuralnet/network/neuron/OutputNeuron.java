@@ -27,7 +27,7 @@ public class OutputNeuron extends Neuron {
     @Override
     public void calculateValue(){
         double e = 0;
-        int xw = 0;
+        double xw = 0;
         //Sigmoid
         for(Connection c : incommingConnections)
             xw+=c.calculateOutput();
@@ -40,7 +40,7 @@ public class OutputNeuron extends Neuron {
         String text = "output neuron has ";
         for(Connection con : incommingConnections)
             text += con.toString() + ", ";
-        text += " making its value " + getValue();
+        text += '\n'+" making its value " + getValue();
         return text;
     }
 }
