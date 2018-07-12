@@ -53,12 +53,17 @@ public class Starter {
         genAlg.testPrintAndScorePopulation(inputs3, expOutputs3);
         genAlg.testPrintAndScorePopulation(inputs4, expOutputs4);
         
-        /*int countr = 0;
-        while(!genAlg.isDone() || countr < 10){
+        //System.out.println(genAlg.winner);
+        
+        int countr = 0;
+        while(!genAlg.isDone() && countr < 5){
             genAlg.makeNextGeneration();
-            genAlg.testPrintAndScorePopulation(inputs, expOutputs);
+            genAlg.testPrintAndScorePopulation(inputs1, expOutputs1);
+            genAlg.testPrintAndScorePopulation(inputs2, expOutputs2);
+            genAlg.testPrintAndScorePopulation(inputs3, expOutputs3);
+            genAlg.testPrintAndScorePopulation(inputs4, expOutputs4);
             countr++;
-        }*/
+        }
         
     }
     

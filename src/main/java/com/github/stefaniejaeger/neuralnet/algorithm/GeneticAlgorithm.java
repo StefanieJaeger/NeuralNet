@@ -17,7 +17,7 @@ public class GeneticAlgorithm {
     private double mutationRate;
     private NeuralNet network;
     private List<Genome> rouletteWheel;
-    private List<Genome> winner;
+    public List<Genome> winner;
 
     public GeneticAlgorithm(GeneticAlgorithmConfiguration geneticAlgorithmConfiguration) {
         this.network = geneticAlgorithmConfiguration.neuralNet;
@@ -50,6 +50,8 @@ public class GeneticAlgorithm {
 
         while (newPopulation.size() < population.size()) {
             List<Genome> parents = getMomAndDad();
+            while(parents.get(0) == parents.get(1))
+                parents = getMomAndDad();
             makeBabies(parents.get(0), parents.get(1));
         }
 
@@ -79,19 +81,29 @@ public class GeneticAlgorithm {
         Random ran = new Random();
         if (crossoverRate < ran.nextDouble()) {
             //mom and dad get to live on if they don't fuck
-            newPopulation.add(mom);
-            newPopulation.add(dad);
+            Chromosome momChromo = new Chromosome(mom.getDNA());
+            Chromosome dadChromo = new Chromosome(dad.getDNA());
+            
+            Genome newMom = new Genome(momChromo);
+            Genome newDad = new Genome(dadChromo);
+            
+            newPopulation.add(newMom);
+            newPopulation.add(newDad);
+            
             return;
         }
 
         //if crossoverRate gets matched, make two new genomes from mom and dad
-        int index = ran.nextInt(mom.getDNA().size());
-
+        int length = mom.getDNA().size();
+        int index = ran.nextInt(length);
+        
+        List<Double> dnaMom = new ArrayList<>(mom.getDNA().subList(0, index));
+        dnaMom.addAll(dad.getDNA().subList(index, length));
+        List<Double> dnaDad = new ArrayList<>(dad.getDNA().subList(0, index));
+        dnaDad.addAll(mom.getDNA().subList(index, length));
         //take random amount from mom's and dad's DNA for kids' DNA
-        Chromosome chromo1 = new Chromosome(mom.getDNA().subList(0, index - 1));
-        Chromosome chromo2 = new Chromosome(dad.getDNA().subList(0, index - 1));
-        chromo1.dna.addAll(dad.getDNA().subList(index, dad.getDNA().size()));
-        chromo2.dna.addAll(mom.getDNA().subList(index, mom.getDNA().size()));
+        Chromosome chromo1 = new Chromosome(dnaMom);
+        Chromosome chromo2 = new Chromosome(dnaDad);
 
         //Create new genomes with DNA and name
         Genome kid1 = new Genome(chromo1);
@@ -108,13 +120,13 @@ public class GeneticAlgorithm {
 
     private Genome mutate(Genome gen) {
         Random ran = new Random();
-        List<Double> dna = gen.getDNA();//change a chromosome if mutation rate was matched (low chance)
+        List<Double> dna = new ArrayList<>(gen.getDNA());//change a chromosome if mutation rate was matched (low chance)
 
         for (int i = 0; i < dna.size(); i++) {
             Double chromosome = dna.get(i);
 
             if (mutationRate >= ran.nextDouble())
-                dna.set(i,9 - chromosome);
+                gen.getDNA().set(i,9 - chromosome);
         }
 
         return gen;
@@ -162,10 +174,17 @@ public class GeneticAlgorithm {
 
     private void scoreGenome(Genome gen, List<Double> expOutputs, List<Double> actOutputs) {
         //if output guess correctly, increase fitness by 1
-        if (expOutputs.equals(actOutputs)){
-            gen.setFitness(gen.getFitness() + 1);
-            winner.add(gen);
+        List<Double> rounded = new ArrayList<>();
+        
+        for(Double d : actOutputs){
+            rounded.add((double)Math.round(d));
         }
+        
+        if (expOutputs.equals(rounded)){
+            gen.setFitness(gen.getFitness() + 1);
+        }
+        if(gen.getFitness() >2)
+            winner.add(gen);
     }
     
     public boolean isDone(){

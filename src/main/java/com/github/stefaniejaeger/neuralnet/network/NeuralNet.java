@@ -45,15 +45,16 @@ public class NeuralNet {
     private void connect(){
         List<Layer> layers = this.layers;
         List<Connection> connections = new ArrayList<>();
-        int weightCounter = weights.size()-1;
+        int weightCounter = 0;        
         //go through all hidden layers
+                
         for(int i = 1; i < layers.size()-1; i++){
             //add a connection for each neuron in the previous layer to each neuron in the current one
             for(int k = 0; k< layers.get(i).getNeurons().size(); k++){   
                 
                 for(int j =0; j < layers.get(i-1).getNeurons().size(); j++){
                     connections.add(new Connection(weights.get(weightCounter),layers.get(i-1).getNeurons().get(j)));
-                    weightCounter = weightCounter-1;
+                    weightCounter++;
                 }
             
                 layers.get(i).getNeurons().get(k).addConnections(connections);
@@ -67,7 +68,7 @@ public class NeuralNet {
             //add a connection for each neuron in the previous layer to each neuron in the current one
             for(int j =0; j < layers.get(index-1).getNeurons().size(); j++){
                 connections.add(new Connection(weights.get(weightCounter), layers.get(index-1).getNeurons().get(j)));
-                weightCounter = weightCounter-1;
+                weightCounter++;
             }
              
             layers.get(index).getNeurons().get(k).addConnections(connections);       
@@ -135,6 +136,6 @@ public class NeuralNet {
         OutputLayer output = (OutputLayer)layers.get(layers.size()-1);
         output.neurons.get(0).calculateValue();
         outputs = output.getOutputs();
-        //outputs.forEach(e->Math.round(e));
+        System.out.println(outputs);
     }
 }
