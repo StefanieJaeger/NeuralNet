@@ -37,6 +37,7 @@ public class GeneticAlgorithm {
             for (int j = 0; j < chromosomeLength; j++) {
                 chromo.dna.add(ran.nextDouble());
             }
+            
             //create the genome with DNA and name
             Genome gen = new Genome(chromo);
             population.add(gen);
@@ -50,8 +51,10 @@ public class GeneticAlgorithm {
 
         while (newPopulation.size() < population.size()) {
             List<Genome> parents = getMomAndDad();
-            while(parents.get(0) == parents.get(1))
+            while(parents.get(0).getDNA() == parents.get(1).getDNA()){
                 parents = getMomAndDad();
+                System.out.println("Mom and dad was the same person");
+            }
             makeBabies(parents.get(0), parents.get(1));
         }
 
@@ -63,8 +66,10 @@ public class GeneticAlgorithm {
         //add population member to the list as many times as his fitness
         rouletteWheel = new ArrayList<>();
         for (Genome gen : population) {
-            for (int i = 0; i < gen.getFitness(); i++)
+            for (int i = 0; i < gen.getFitness(); i++){
                 rouletteWheel.add(gen);
+                //System.out.println(gen.toString() + " in roulette");
+            }
         }
     }
 
@@ -124,7 +129,8 @@ public class GeneticAlgorithm {
 
         for (int i = 0; i < dna.size(); i++) {
             Double chromosome = dna.get(i);
-
+            
+            //TODO go through numbers in double
             if (mutationRate >= ran.nextDouble())
                 gen.getDNA().set(i,9 - chromosome);
         }
@@ -143,7 +149,7 @@ public class GeneticAlgorithm {
             //network.printNet();
             //print test results
             System.out.println("Genome Generation " + generationCount +", Member " + genomeCountr + " " + gen.toString());
-            System.out.println(network.toString());
+           // System.out.println(network.toString());
             genomeCountr++;
         }
     }

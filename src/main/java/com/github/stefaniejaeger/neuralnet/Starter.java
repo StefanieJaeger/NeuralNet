@@ -23,16 +23,16 @@ public class Starter {
         netConfig.numberOfInputNeurons = 2;
         netConfig.numberOfOutputNeurons = 1;
         netConfig.numberOfHiddenLayers = 1;
-        netConfig.numberOfNeuronsPerHiddenLayer = 3;
-        netConfig.bias = 2;
+        netConfig.numberOfNeuronsPerHiddenLayer = 2;
+        netConfig.bias = 1;
         NeuralNet net = new NeuralNet(netConfig);
         
         GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
-        algConfig.chromosomeLengthOfGenome = 9;
-        algConfig.crossoverRate = 0.7;
-        algConfig.mutationRate = 0.15;
+        algConfig.chromosomeLengthOfGenome = 6;
+        algConfig.crossoverRate = 0.99;
+        algConfig.mutationRate = 0.5;
         algConfig.neuralNet = net;
-        algConfig.populationSize = 5;
+        algConfig.populationSize = 6;
         
         //inputs and expected outputs
         List<Double> inputs1 = Arrays.asList(0.0,0.0);
@@ -48,19 +48,19 @@ public class Starter {
         GeneticAlgorithm genAlg = new GeneticAlgorithm(algConfig);
         
         //test, score and print the genomes and neural net
-        genAlg.testPrintAndScorePopulation(inputs1, expOutputs1);
-        genAlg.testPrintAndScorePopulation(inputs2, expOutputs2);
-        genAlg.testPrintAndScorePopulation(inputs3, expOutputs3);
+        genAlg.testAndScorePopulation(inputs1, expOutputs1);
+        genAlg.testAndScorePopulation(inputs2, expOutputs2);
+        genAlg.testAndScorePopulation(inputs3, expOutputs3);
         genAlg.testPrintAndScorePopulation(inputs4, expOutputs4);
         
         //System.out.println(genAlg.winner);
         
         int countr = 0;
-        while(!genAlg.isDone() && countr < 5){
+        while(!genAlg.isDone() && countr < 9){
             genAlg.makeNextGeneration();
-            genAlg.testPrintAndScorePopulation(inputs1, expOutputs1);
-            genAlg.testPrintAndScorePopulation(inputs2, expOutputs2);
-            genAlg.testPrintAndScorePopulation(inputs3, expOutputs3);
+            genAlg.testAndScorePopulation(inputs1, expOutputs1);
+            genAlg.testAndScorePopulation(inputs2, expOutputs2);
+            genAlg.testAndScorePopulation(inputs3, expOutputs3);
             genAlg.testPrintAndScorePopulation(inputs4, expOutputs4);
             countr++;
         }

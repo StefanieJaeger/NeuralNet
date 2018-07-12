@@ -136,6 +136,5 @@ public class NeuralNet {
         OutputLayer output = (OutputLayer)layers.get(layers.size()-1);
         output.neurons.get(0).calculateValue();
         outputs = output.getOutputs();
-        System.out.println(outputs);
     }
 }
