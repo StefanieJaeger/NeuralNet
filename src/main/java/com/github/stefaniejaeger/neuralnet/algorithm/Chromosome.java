@@ -1,34 +1,47 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.github.stefaniejaeger.neuralnet.algorithm;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-/**
- *
- * @author jaeger
- */
 public class Chromosome {
-    public List<Double> dna;
-    private int DnaLength;
-    
-    public Chromosome(List<Double> dna/*, int length*/){
-        this.dna = dna;
-        //DnaLength = length;
-    }
-    
-    //TODO subscribe to dna change and make sure it doesn't exeed length
 
-    
+    private List<Double> dna;
+
+    public Chromosome(List<Double> dna) {
+        this.dna = dna;
+    }
+
+    public List<Double> getDNA() {
+        return dna;
+    }
+
+    public void crossover(int index, Chromosome otherChromosome) {
+        List<Double> startOfDNA = dna.subList(0, index);
+        List<Double> endOfDNA = dna.subList(index, dna.size());
+
+        List<Double> startOfOtherDNA = dna.subList(0, index);
+        List<Double> endOfOtherDNA = dna.subList(index, otherChromosome.getDNA().size());
+
+        this.dna = Stream.concat(startOfDNA.stream(), endOfOtherDNA.stream()).collect(Collectors.toList());
+        otherChromosome.dna = Stream.concat(startOfOtherDNA.stream(), endOfDNA.stream()).collect(Collectors.toList());
+    }
+
+    public void mutate(double mutationRate) {
+        Random ran = new Random();
+
+        for (int i = 0; i < dna.size(); i++)
+            if (mutationRate >= ran.nextDouble())
+                dna.set(i, ran.nextDouble());
+    }
+
     @Override
-    public String toString(){
+    public String toString() {
         String sDna = "";
-        for(Double molecule : dna){
+        for(Double molecule : dna)
             sDna += ", " + molecule.toString();
-        }
         return sDna.replaceFirst(", ", "");
     }
 }

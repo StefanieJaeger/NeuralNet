@@ -1,5 +1,6 @@
 package com.github.stefaniejaeger.neuralnet.network;
 
+import com.github.stefaniejaeger.neuralnet.algorithm.Chromosome;
 import com.github.stefaniejaeger.neuralnet.network.layer.HiddenLayer;
 import com.github.stefaniejaeger.neuralnet.network.layer.InputLayer;
 import com.github.stefaniejaeger.neuralnet.network.layer.Layer;
@@ -19,7 +20,7 @@ public class NeuralNet {
     private List<Layer> layers;
     private NeuralNetConfiguration configuration;
     public List<Double> outputs = new ArrayList<>();
-    public List<Double> weights = new ArrayList<>();
+    public Chromosome weights;
     
     public NeuralNet(NeuralNetConfiguration configuration){
         this.configuration = configuration;
@@ -37,7 +38,7 @@ public class NeuralNet {
         layers.add(new OutputLayer(configuration.numberOfOutputNeurons));
     }
     
-    public void setWeights(List<Double> w){
+    public void setWeights(Chromosome w){
         weights = w;
         connect();
     }
@@ -48,12 +49,12 @@ public class NeuralNet {
         int weightCounter = 0;        
         //go through all hidden layers
                 
-        for(int i = 1; i < layers.size()-1; i++){
+        for(int i = 1; i < layers.size(); i++){
             //add a connection for each neuron in the previous layer to each neuron in the current one
             for(int k = 0; k< layers.get(i).getNeurons().size(); k++){   
                 
                 for(int j =0; j < layers.get(i-1).getNeurons().size(); j++){
-                    connections.add(new Connection(weights.get(weightCounter),layers.get(i-1).getNeurons().get(j)));
+                    connections.add(new Connection(weights.getDNA().get(weightCounter),layers.get(i-1).getNeurons().get(j)));
                     weightCounter++;
                 }
             
@@ -62,21 +63,16 @@ public class NeuralNet {
                 connections = new ArrayList<>();
             }
         }
-        //output layer
-        int index = layers.size()-1;
-        for(int k = 0; k < layers.get(index).getNeurons().size(); k++){
-            //add a connection for each neuron in the previous layer to each neuron in the current one
-            for(int j =0; j < layers.get(index-1).getNeurons().size(); j++){
-                connections.add(new Connection(weights.get(weightCounter), layers.get(index-1).getNeurons().get(j)));
-                weightCounter++;
-            }
-             
-            layers.get(index).getNeurons().get(k).addConnections(connections);       
-            connections = new ArrayList<>();
-        }
         this.layers = layers;        
     }
-    
+
+    public List<Integer> getRoundedOutputs(){
+        List<Integer> roundedOutputs = new ArrayList<>();
+        for(Double d : outputs)
+            roundedOutputs.add((int)Math.round(d));
+        return roundedOutputs;
+    }
+
     @Override
     public String toString(){
         String text = "NEURAL NET STRUCTURE: " + '\n' + '\t';
