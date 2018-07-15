@@ -3,6 +3,13 @@ package com.github.stefaniejaeger.neuralnet.algorithm;
 import com.github.stefaniejaeger.neuralnet.Test;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -25,6 +32,8 @@ public class GeneticAlgorithm {
 
     public List<Genome> winner;
 
+    public PrintWriter writer;
+
     public GeneticAlgorithm(GeneticAlgorithmConfiguration geneticAlgorithmConfiguration) {
         this.network = geneticAlgorithmConfiguration.neuralNet;
         this.crossoverRate = geneticAlgorithmConfiguration.crossoverRate;
@@ -32,6 +41,14 @@ public class GeneticAlgorithm {
 
         this.population = new ArrayList<>();
         this.winner = new ArrayList<>();
+
+        try {
+            writer = new PrintWriter("statistics/generationAverage.csv", "UTF-8");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
 
         //create the first generation
         initializePopulation(geneticAlgorithmConfiguration.populationSize, geneticAlgorithmConfiguration.chromosomeLengthOfGenome);
@@ -152,9 +169,27 @@ public class GeneticAlgorithm {
                         winner.add(genome);
                 }
             }
-            System.out.println("Genome Generation " + generationCount + ", Member " + genomeCounter + " " + genome.toString());
+            String text = generationCount + ";" + genomeCounter + "; " + genome.getFitness() + "; " + genome.getChromosome().getDNA();
+            //System.out.println("Genome Generation " + generationCount + ", Member " + genomeCounter + " " + genome.toString());
+            System.out.println(text);
+            /*try {
+                Files.write(Paths.get("statistics.txt"), "the text".getBytes(), StandardOpenOption.APPEND);
+            }catch (IOException e) {
+                //exception handling left as an exercise for the reader
+            }*/
+
             genomeCounter++;
         }
+        System.out.println(generationCount + "," + getPopulationAverageFitness());
+        writer.println(generationCount + "," + getPopulationAverageFitness());
+        writer.flush();
+    }
+
+    private double getPopulationAverageFitness(){
+        double fit = 0.0;
+        for(Genome gen : population)
+            fit += gen.getFitness();
+        return fit/population.size();
     }
 
     public boolean isDone() {

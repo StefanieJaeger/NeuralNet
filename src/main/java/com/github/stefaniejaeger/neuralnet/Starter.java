@@ -23,17 +23,17 @@ public class Starter {
         NeuralNetConfiguration netConfig = new NeuralNetConfiguration();
         netConfig.numberOfInputNeurons = 2;
         netConfig.numberOfOutputNeurons = 1;
-        netConfig.numberOfHiddenLayers = 1;
-        netConfig.numberOfNeuronsPerHiddenLayer = 3;
+        netConfig.numberOfHiddenLayers = 2;
+        netConfig.numberOfNeuronsPerHiddenLayer = 4;
         netConfig.bias = 1;
         NeuralNet net = new NeuralNet(netConfig);
         
         GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
-        algConfig.chromosomeLengthOfGenome = 13;
+        algConfig.chromosomeLengthOfGenome = 37;
         algConfig.crossoverRate = 0.7;
         algConfig.mutationRate = 0.05;
         algConfig.neuralNet = net;
-        algConfig.populationSize = 200;
+        algConfig.populationSize = 100;
 
         List<Test> testCases = new ArrayList<>();
         testCases.add(new Test(Arrays.asList(0.0,0.0), Arrays.asList(1)));
@@ -41,20 +41,21 @@ public class Starter {
         testCases.add(new Test(Arrays.asList(1.0,0.0), Arrays.asList(0)));
         testCases.add(new Test(Arrays.asList(1.0,1.0), Arrays.asList(1)));
 
-        //genetic alogrithm with crossoverRate 0.7, mutationRate 0.1, population count 10 and chromosone count per genome
+        //genetic algorithm with crossoverRate 0.7, mutationRate 0.1, population count 10 and chromosome count per genome
         GeneticAlgorithm genAlg = new GeneticAlgorithm(algConfig);
         
         genAlg.testPrintAndScorePopulation(testCases);
         
         //System.out.println(genAlg.winner);
-        
+
         int countr = 0;
         while(!genAlg.isDone()){
             genAlg.makeNextGeneration();
             genAlg.testPrintAndScorePopulation(testCases);
             countr++;
         }
-        
+        genAlg.writer.close();
+
     }
-    
+
 }
