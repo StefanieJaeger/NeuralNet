@@ -165,7 +165,7 @@ public class GeneticAlgorithm {
                 network.calculateOutputs(test.getInputs());
                 if (test.isOutputCorrect(network.getRoundedOutputs())) {
                     genome.increaseFitness();
-                    if(genome.getFitness() > 3.0 && !winner.contains(genome))
+                    if (genome.getFitness() > 3.0 && !winner.contains(genome))
                         winner.add(genome);
                 }
             }

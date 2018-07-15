@@ -23,13 +23,13 @@ public class Starter {
         NeuralNetConfiguration netConfig = new NeuralNetConfiguration();
         netConfig.numberOfInputNeurons = 2;
         netConfig.numberOfOutputNeurons = 1;
-        netConfig.numberOfHiddenLayers = 2;
-        netConfig.numberOfNeuronsPerHiddenLayer = 4;
+        netConfig.numberOfHiddenLayers = 1;
+        netConfig.numberOfNeuronsPerHiddenLayer = 2;
         netConfig.bias = 1;
         NeuralNet net = new NeuralNet(netConfig);
         
         GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
-        algConfig.chromosomeLengthOfGenome = 37;
+        algConfig.chromosomeLengthOfGenome = netConfig.getRequiredNumberOfWeights();
         algConfig.crossoverRate = 0.7;
         algConfig.mutationRate = 0.05;
         algConfig.neuralNet = net;
