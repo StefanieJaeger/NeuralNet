@@ -38,7 +38,7 @@ public class Chromosome {
 
         for (int i = 0; i < dna.size(); i++)
             if (mutationRate >= ran.nextDouble())
-                dna.set(i, ran.nextDouble());
+                dna.set(i, ran.nextDouble() * 2 - 1);
     }
 
     @Override

@@ -66,7 +66,7 @@ public class GeneticAlgorithm {
         for (int i = 0; i < size; i++) {
             List<Double> dna = new ArrayList<>();
             for (int j = 0; j < chromosomeLength; j++) {
-                dna.add(ran.nextDouble());
+                dna.add(ran.nextDouble() * 2 - 1);
             }
 
             //add new genome with new chromosome to population
