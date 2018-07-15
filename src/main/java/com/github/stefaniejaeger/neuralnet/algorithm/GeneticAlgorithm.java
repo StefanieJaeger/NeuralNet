@@ -80,9 +80,11 @@ public class GeneticAlgorithm {
     private void populateRouletteWheel() {
         //add population member to the list as many times as his fitness
         rouletteWheel = new RouletteWheel<>();
-        for (Genome gen : population)
-            for (int i = 0; i < gen.getFitness(); i++)
+        for (Genome gen : population) {
+            for (int i = 0; i < gen.getFitness() + 1; i++) {
                 rouletteWheel.add(gen);
+            }
+        }
     }
 
     /**
@@ -96,7 +98,7 @@ public class GeneticAlgorithm {
         parents.add(rouletteWheel.getRandomElement());
         parents.add(rouletteWheel.getRandomElement());
 
-        while (parents.get(0) == parents.get(1))
+        while (parents.get(0).getChromosome() == parents.get(1).getChromosome())
             parents.set(1, rouletteWheel.getRandomElement());
 
         return parents;
@@ -116,8 +118,8 @@ public class GeneticAlgorithm {
         int length = mom.getChromosome().getDNA().size();
         int index = ran.nextInt(length);
 
-        Chromosome kiddo1Chromosome = mom.getChromosome();
-        Chromosome kiddo2Chromosome = dad.getChromosome();
+        Chromosome kiddo1Chromosome = mom.getChromosome().copy();
+        Chromosome kiddo2Chromosome = dad.getChromosome().copy();
 
         kiddo1Chromosome.crossover(index, kiddo2Chromosome);
 
@@ -144,8 +146,11 @@ public class GeneticAlgorithm {
             network.setWeights(genome.getChromosome());
             for (Test test : testCases) {
                 network.calculateOutputs(test.getInputs());
-                if (test.isOutputCorrect(network.getRoundedOutputs()))
+                if (test.isOutputCorrect(network.getRoundedOutputs())) {
                     genome.increaseFitness();
+                    if(genome.getFitness() > 3.0 && !winner.contains(genome))
+                        winner.add(genome);
+                }
             }
             System.out.println("Genome Generation " + generationCount + ", Member " + genomeCounter + " " + genome.toString());
             genomeCounter++;

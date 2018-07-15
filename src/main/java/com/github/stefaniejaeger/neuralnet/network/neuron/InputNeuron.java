@@ -11,9 +11,8 @@ import java.util.List;
 public class InputNeuron extends Neuron {
     
     public void setValue(double input){
-        super.value = input;
+        value = input;
     }
-
 
     @Override
     public void calculateValue() {

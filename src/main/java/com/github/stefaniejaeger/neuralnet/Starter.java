@@ -24,16 +24,16 @@ public class Starter {
         netConfig.numberOfInputNeurons = 2;
         netConfig.numberOfOutputNeurons = 1;
         netConfig.numberOfHiddenLayers = 1;
-        netConfig.numberOfNeuronsPerHiddenLayer = 2;
+        netConfig.numberOfNeuronsPerHiddenLayer = 3;
         netConfig.bias = 1;
         NeuralNet net = new NeuralNet(netConfig);
         
         GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
-        algConfig.chromosomeLengthOfGenome = 6;
+        algConfig.chromosomeLengthOfGenome = 13;
         algConfig.crossoverRate = 0.7;
         algConfig.mutationRate = 0.05;
         algConfig.neuralNet = net;
-        algConfig.populationSize = 6;
+        algConfig.populationSize = 200;
 
         List<Test> testCases = new ArrayList<>();
         testCases.add(new Test(Arrays.asList(0.0,0.0), Arrays.asList(1)));
@@ -49,7 +49,7 @@ public class Starter {
         //System.out.println(genAlg.winner);
         
         int countr = 0;
-        while(!genAlg.isDone() && countr < 9){
+        while(!genAlg.isDone()){
             genAlg.makeNextGeneration();
             genAlg.testPrintAndScorePopulation(testCases);
             countr++;

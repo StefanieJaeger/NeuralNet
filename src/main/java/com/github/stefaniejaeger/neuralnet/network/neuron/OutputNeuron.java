@@ -33,6 +33,7 @@ public class OutputNeuron extends Neuron {
             xw+=c.calculateOutput();
         e = xw;
         value = 1 / (1 + Math.exp(e * -1));
+        value = (value - 0.5) * 2;
     }
     
     @Override

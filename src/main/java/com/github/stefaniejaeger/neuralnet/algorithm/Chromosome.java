@@ -10,6 +10,10 @@ public class Chromosome {
 
     private List<Double> dna;
 
+    public Chromosome copy() {
+        return new Chromosome(dna);
+    }
+
     public Chromosome(List<Double> dna) {
         this.dna = dna;
     }
@@ -22,8 +26,8 @@ public class Chromosome {
         List<Double> startOfDNA = dna.subList(0, index);
         List<Double> endOfDNA = dna.subList(index, dna.size());
 
-        List<Double> startOfOtherDNA = dna.subList(0, index);
-        List<Double> endOfOtherDNA = dna.subList(index, otherChromosome.getDNA().size());
+        List<Double> startOfOtherDNA = otherChromosome.dna.subList(0, index);
+        List<Double> endOfOtherDNA = otherChromosome.dna.subList(index, otherChromosome.getDNA().size());
 
         this.dna = Stream.concat(startOfDNA.stream(), endOfOtherDNA.stream()).collect(Collectors.toList());
         otherChromosome.dna = Stream.concat(startOfOtherDNA.stream(), endOfDNA.stream()).collect(Collectors.toList());
