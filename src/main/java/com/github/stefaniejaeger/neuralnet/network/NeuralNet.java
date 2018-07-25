@@ -56,7 +56,7 @@ public class NeuralNet {
             for (int k = 0; k < layers.get(i).getNeurons().size(); k++) {
                 if (i == layers.size()-1 || k != layers.get(i).getNeurons().size()-1){
                     for (int j = 0; j < layers.get(i - 1).getNeurons().size(); j++) {
-                        connections.add(new Connection(weights.getDNA().get(weightCounter), layers.get(i - 1).getNeurons().get(j)));
+                        connections.add(new Connection(weights.getDNA().get(weightCounter).getValue(), layers.get(i - 1).getNeurons().get(j)));
                         weightCounter++;
                     }
 

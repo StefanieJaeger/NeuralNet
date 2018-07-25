@@ -2,6 +2,8 @@ package com.github.stefaniejaeger.neuralnet;
 
 import com.github.stefaniejaeger.neuralnet.algorithm.GeneticAlgorithm;
 import com.github.stefaniejaeger.neuralnet.algorithm.GeneticAlgorithmConfiguration;
+import com.github.stefaniejaeger.neuralnet.algorithm.RandomProvider;
+import com.github.stefaniejaeger.neuralnet.algorithm.RealRandomProvider;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNetConfiguration;
 
@@ -31,9 +33,9 @@ public class Starter {
         GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
         algConfig.chromosomeLengthOfGenome = netConfig.getRequiredNumberOfWeights();
         algConfig.crossoverRate = 0.7;
-        algConfig.mutationRate = 0.05;
+        algConfig.mutationRate = 0.1;
         algConfig.neuralNet = net;
-        algConfig.populationSize = 100;
+        algConfig.populationSize = 200;
 
         List<Test> testCases = new ArrayList<>();
         testCases.add(new Test(Arrays.asList(0.0,0.0), Arrays.asList(1)));
@@ -41,8 +43,10 @@ public class Starter {
         testCases.add(new Test(Arrays.asList(1.0,0.0), Arrays.asList(0)));
         testCases.add(new Test(Arrays.asList(1.0,1.0), Arrays.asList(1)));
 
+        RandomProvider randomProvider = new RealRandomProvider();
+
         //genetic algorithm with crossoverRate 0.7, mutationRate 0.1, population count 10 and chromosome count per genome
-        GeneticAlgorithm genAlg = new GeneticAlgorithm(algConfig);
+        GeneticAlgorithm genAlg = new GeneticAlgorithm(algConfig, randomProvider);
         
         genAlg.testPrintAndScorePopulation(testCases);
         

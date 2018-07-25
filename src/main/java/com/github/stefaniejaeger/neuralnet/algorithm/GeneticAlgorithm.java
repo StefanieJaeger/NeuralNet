@@ -34,19 +34,21 @@ public class GeneticAlgorithm {
 
     public PrintWriter writer;
 
-    public GeneticAlgorithm(GeneticAlgorithmConfiguration geneticAlgorithmConfiguration) {
+    private RandomProvider randomProvider;
+
+    public GeneticAlgorithm(GeneticAlgorithmConfiguration geneticAlgorithmConfiguration, RandomProvider randomProvider) {
         this.network = geneticAlgorithmConfiguration.neuralNet;
         this.crossoverRate = geneticAlgorithmConfiguration.crossoverRate;
         this.mutationRate = geneticAlgorithmConfiguration.mutationRate;
+
+        this.randomProvider = randomProvider;
 
         this.population = new ArrayList<>();
         this.winner = new ArrayList<>();
 
         try {
             writer = new PrintWriter("statistics/generationAverage.csv", "UTF-8");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (UnsupportedEncodingException e) {
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
             e.printStackTrace();
         }
 
@@ -61,12 +63,10 @@ public class GeneticAlgorithm {
      * @param chromosomeLength number of doubles in dna
      */
     private void initializePopulation(int size, int chromosomeLength) {
-        Random ran = new Random();
-
         for (int i = 0; i < size; i++) {
-            List<Double> dna = new ArrayList<>();
+            List<Molecule> dna = new ArrayList<>();
             for (int j = 0; j < chromosomeLength; j++) {
-                dna.add(ran.nextDouble() * 2 - 1);
+                dna.add(new Molecule(randomProvider.getDoubleInRange(-1, 1)));
             }
 
             //add new genome with new chromosome to population
@@ -122,8 +122,7 @@ public class GeneticAlgorithm {
     }
 
     private void makeBabies(Genome mom, Genome dad) {
-        Random ran = new Random();
-        if (crossoverRate < ran.nextDouble()) {
+        if (crossoverRate < randomProvider.getDoubleInRange(0, 1)) {
             //mom and dad get to live on if they don't fuck
             newPopulation.add(new Genome(mom.getChromosome()));
             newPopulation.add(new Genome(dad.getChromosome()));
@@ -133,10 +132,10 @@ public class GeneticAlgorithm {
 
         // if crossoverRate gets matched, make two new genomes from mom and dad
         int length = mom.getChromosome().getDNA().size();
-        int index = ran.nextInt(length);
+        int index = randomProvider.getIntegerInRange(0, length);
 
-        Chromosome kiddo1Chromosome = mom.getChromosome().copy();
-        Chromosome kiddo2Chromosome = dad.getChromosome().copy();
+        Chromosome kiddo1Chromosome = new Chromosome(mom.getChromosome());
+        Chromosome kiddo2Chromosome = new Chromosome(dad.getChromosome());
 
         kiddo1Chromosome.crossover(index, kiddo2Chromosome);
 
@@ -145,16 +144,19 @@ public class GeneticAlgorithm {
         Genome kid2 = new Genome(kiddo2Chromosome);
 
         //Try to mutate kids to get some diversity
-        kid1 = mutate(kid1);
-        kid2 = mutate(kid2);
+        mutate(kid1);
+        mutate(kid2);
 
         newPopulation.add(kid1);
         newPopulation.add(kid2);
     }
 
-    private Genome mutate(Genome gen) {
-        gen.getChromosome().mutate(mutationRate);
-        return gen;
+    private void mutate(Genome genome) {
+        for (Molecule molecule : genome.getChromosome().getDNA()) {
+            if (mutationRate > randomProvider.getDoubleInRange(0, 1)) {
+                molecule.mutate(randomProvider);
+            }
+        }
     }
 
     public void testPrintAndScorePopulation(List<Test> testCases) {

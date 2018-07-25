@@ -1,5 +1,7 @@
 package com.github.stefaniejaeger.neuralnet.algorithm;
 
+import java.util.List;
+
 /**
  *
  * @author Stefanie
@@ -9,7 +11,7 @@ public class Genome {
     private Chromosome chromosome;
 
     public Genome(Chromosome chromosome){
-        this.chromosome = chromosome;
+        this.chromosome = new Chromosome(chromosome);
     }
     
     public double getFitness(){

@@ -8,44 +8,39 @@ import java.util.stream.Stream;
 
 public class Chromosome {
 
-    private List<Double> dna;
+    private List<Molecule> dna;
 
-    public Chromosome copy() {
-        return new Chromosome(dna);
+    // TODO
+    public Chromosome(Chromosome another) {
+        this.dna = new ArrayList<>();
+
+        for (Molecule molecule : another.dna) {
+            this.dna.add(new Molecule(molecule));
+        }
     }
 
-    public Chromosome(List<Double> dna) {
+    public Chromosome(List<Molecule> dna) {
         this.dna = dna;
     }
 
-    public List<Double> getDNA() {
-        return dna;
-    }
-
     public void crossover(int index, Chromosome otherChromosome) {
-        List<Double> startOfDNA = dna.subList(0, index);
-        List<Double> endOfDNA = dna.subList(index, dna.size());
+        List<Molecule> startOfDNA = dna.subList(0, index);
+        List<Molecule> endOfDNA = dna.subList(index, dna.size());
 
-        List<Double> startOfOtherDNA = otherChromosome.dna.subList(0, index);
-        List<Double> endOfOtherDNA = otherChromosome.dna.subList(index, otherChromosome.getDNA().size());
+        List<Molecule> startOfOtherDNA = otherChromosome.dna.subList(0, index);
+        List<Molecule> endOfOtherDNA = otherChromosome.dna.subList(index, otherChromosome.getDNA().size());
 
         this.dna = Stream.concat(startOfDNA.stream(), endOfOtherDNA.stream()).collect(Collectors.toList());
         otherChromosome.dna = Stream.concat(startOfOtherDNA.stream(), endOfDNA.stream()).collect(Collectors.toList());
     }
 
-    public void mutate(double mutationRate) {
-        Random ran = new Random();
-
-        for (int i = 0; i < dna.size(); i++)
-            if (mutationRate >= ran.nextDouble())
-                dna.set(i, ran.nextDouble() * 2 - 1);
+    public List<Molecule> getDNA() {
+        return dna;
     }
 
     @Override
     public String toString() {
-        String sDna = "";
-        for(Double molecule : dna)
-            sDna += ", " + molecule.toString();
-        return sDna.replaceFirst(", ", "");
+        return dna.stream().map(Object::toString).collect(Collectors.joining(","));
     }
+
 }
