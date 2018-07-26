@@ -5,6 +5,7 @@ import com.github.stefaniejaeger.neuralnet.network.Connection;
 import java.util.List;
 
 public class BiasNeuron extends Neuron {
+
     public BiasNeuron(Double bias) {
         value = bias;
     }
@@ -20,7 +21,13 @@ public class BiasNeuron extends Neuron {
     }
 
     @Override
-    public void addConnections(List<Connection> cons) {
+    public void addConnection(Connection connection) {
 
     }
+
+    @Override
+    public void reset() {
+
+    }
+
 }

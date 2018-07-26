@@ -2,23 +2,23 @@ package com.github.stefaniejaeger.neuralnet.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
-public class RouletteWheel<FieldType> {
+class RouletteWheel<FieldType> {
 
+    private RandomProvider randomProvider;
     private List<FieldType> fields;
 
-    public RouletteWheel() {
-        fields = new ArrayList<>();
+    RouletteWheel(RandomProvider randomProvider) {
+        this.randomProvider = randomProvider;
+        this.fields = new ArrayList<>();
     }
 
-    public void add(FieldType element) {
+    void add(FieldType element) {
         fields.add(element);
     }
 
-    public FieldType getRandomElement() {
-        Random ran = new Random();
-        return fields.get(ran.nextInt(fields.size()));
+    FieldType getRandomElement() {
+        return fields.get(randomProvider.getIntegerInRange(0, fields.size()));
     }
 
 }

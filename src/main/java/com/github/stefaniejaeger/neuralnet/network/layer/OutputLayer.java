@@ -10,17 +10,25 @@ import java.util.List;
  *
  * @author Stefanie
  */
-public class OutputLayer extends Layer {
-    public OutputLayer(int numberOfNeurons){
+public class OutputLayer implements Layer {
+
+    private List<OutputNeuron> outputNeurons;
+
+    public OutputLayer(int numberOfNeurons) {
+        outputNeurons = new ArrayList<>();
+
         for(int i = 0; i< numberOfNeurons; i++){
-            neurons.add(new OutputNeuron());
+            outputNeurons.add(new OutputNeuron());
         }
     }
-    
-    public List<Double> getOutputs(){
-        List<Double> outputs = new ArrayList<>();
-        for(Neuron neuron : neurons)
-            outputs.add(neuron.getValue());
-        return outputs;
+
+    @Override
+    public List<Neuron> getNeurons() {
+        return new ArrayList<>(outputNeurons);
     }
+
+    public List<OutputNeuron> getOutputNeurons() {
+        return outputNeurons;
+    }
+
 }

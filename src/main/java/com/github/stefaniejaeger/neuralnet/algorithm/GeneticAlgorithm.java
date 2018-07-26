@@ -4,15 +4,11 @@ import com.github.stefaniejaeger.neuralnet.Test;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
+import java.util.stream.Collectors;
 
 /**
  * @author Stefanie
@@ -96,7 +92,7 @@ public class GeneticAlgorithm {
      */
     private void populateRouletteWheel() {
         //add population member to the list as many times as his fitness
-        rouletteWheel = new RouletteWheel<>();
+        rouletteWheel = new RouletteWheel<>(randomProvider);
         for (Genome gen : population) {
             for (int i = 0; i < gen.getFitness() + 1; i++) {
                 rouletteWheel.add(gen);
@@ -162,10 +158,9 @@ public class GeneticAlgorithm {
     public void testPrintAndScorePopulation(List<Test> testCases) {
         int genomeCounter = 0;
         for (Genome genome : population) {
-            network.setWeights(genome.getChromosome());
+            network.setWeights(genome.getChromosome().getDNA().stream().map(Molecule::getValue).collect(Collectors.toList())); // TODO: WTF Jeremy
             for (Test test : testCases) {
-                network.calculateOutputs(test.getInputs());
-                if (test.isOutputCorrect(network.getRoundedOutputs())) {
+                if (test.isOutputCorrect(network.calculateOutputs(test.getInputs()))) {
                     genome.increaseFitness();
                     if (genome.getFitness() > 3.0 && !winner.contains(genome))
                         winner.add(genome);
