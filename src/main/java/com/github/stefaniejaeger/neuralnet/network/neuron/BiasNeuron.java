@@ -2,8 +2,6 @@ package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
 
-import java.util.List;
-
 public class BiasNeuron extends Neuron {
 
     public BiasNeuron(Double bias) {
@@ -11,23 +9,17 @@ public class BiasNeuron extends Neuron {
     }
 
     @Override
-    public void calculateValue() {
+    public void calculateValue() { }
 
-    }
+    @Override
+    public void reset() { }
+
+    @Override
+    public void addConnection(Connection connection) { }
 
     @Override
     public String toString() {
-        return null;
-    }
-
-    @Override
-    public void addConnection(Connection connection) {
-
-    }
-
-    @Override
-    public void reset() {
-
+        return "Bias neuron with value " + value;
     }
 
 }

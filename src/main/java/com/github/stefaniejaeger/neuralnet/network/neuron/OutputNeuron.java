@@ -18,12 +18,7 @@ public class OutputNeuron extends Neuron {
     }
 
     @Override
-    public void addConnection(Connection connection) {
-        incomingConnections.add(connection);
-    }
-
-    @Override
-    public void calculateValue(){
+    public void calculateValue() {
         double e = 0;
         double xw = 0;
         //Sigmoid
@@ -33,7 +28,12 @@ public class OutputNeuron extends Neuron {
         value = 1 / (1 + Math.exp(e * -1));
         value = (value - 0.5) * 2;
     }
-    
+
+    @Override
+    public void addConnection(Connection connection) {
+        incomingConnections.add(connection);
+    }
+
     @Override
     public String toString() {
         String text = "output neuron has ";

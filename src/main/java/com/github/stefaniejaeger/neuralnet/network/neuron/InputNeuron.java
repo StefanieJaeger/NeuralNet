@@ -2,9 +2,6 @@ package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
 
-import java.util.List;
-
-
 /**
  *
  * @author Stefanie
@@ -21,13 +18,13 @@ public class InputNeuron extends Neuron {
     }
     
     @Override
-    public String toString() {
-        return "input neuron with value " + value;
+    public void addConnection(Connection connection) {
+
     }
 
     @Override
-    public void addConnection(Connection connection) {
-
+    public String toString() {
+        return "input neuron with value " + value;
     }
 
 }

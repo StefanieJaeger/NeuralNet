@@ -2,8 +2,6 @@ package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
 
-import java.util.List;
-
 /**
  *
  * @author Stefanie
@@ -11,7 +9,7 @@ import java.util.List;
 public abstract class Neuron {
 
     Double value = null;
-    
+
     public double getValue(){
         if (value == null) {
             calculateValue();
@@ -19,15 +17,13 @@ public abstract class Neuron {
 
         return value;
     }
-    
-    public abstract void calculateValue();
-    
-    public abstract String toString();
 
-    public abstract void addConnection(Connection connection);
+    public abstract void calculateValue();
 
     public void reset() {
         value = null;
     }
+
+    public abstract void addConnection(Connection connection);
 
 }
