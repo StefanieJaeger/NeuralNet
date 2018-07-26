@@ -4,17 +4,17 @@ import com.github.stefaniejaeger.neuralnet.network.layer.HiddenLayer;
 import com.github.stefaniejaeger.neuralnet.network.layer.InputLayer;
 import com.github.stefaniejaeger.neuralnet.network.layer.OutputLayer;
 import com.github.stefaniejaeger.neuralnet.network.neuron.BiasNeuron;
-import com.github.stefaniejaeger.neuralnet.network.neuron.HiddenNeuron;
 import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
+import com.github.stefaniejaeger.neuralnet.network.neuron.OutputNeuron;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * @author Stefanie
  */
 public class NeuralNet {
+
     private InputLayer inputLayer;
     private List<HiddenLayer> hiddenLayers;
     private OutputLayer outputLayer;
@@ -27,8 +27,8 @@ public class NeuralNet {
         this.configuration = configuration;
 
         inputLayer = new InputLayer(createBiasNeuron(), configuration.numberOfInputNeurons);
-        outputLayer = new OutputLayer(configuration.numberOfOutputNeurons);
         hiddenLayers = new ArrayList<>();
+        outputLayer = new OutputLayer(configuration.numberOfOutputNeurons);
 
         for (int i = 0; i < configuration.numberOfHiddenLayers; i++) {
             hiddenLayers.add(new HiddenLayer(createBiasNeuron(), configuration.numberOfNeuronsPerHiddenLayer));
@@ -41,60 +41,35 @@ public class NeuralNet {
         return new BiasNeuron(configuration.bias);
     }
 
-    private void connectInputLayerWithHiddenLayer(InputLayer inputLayer, HiddenLayer hiddenLayer) {
-        for (HiddenNeuron hiddenNeuron : hiddenLayer.getHiddenNeurons()) {
-            for (Neuron inputNeuron : inputLayer.getNeurons()) {
-                hiddenNeuron.addConnection(createConnection(inputNeuron));
+    /**
+     * Connects all the neurons from the first list to all the neurons in the second list
+     */
+    private void connect(List<? extends Neuron> firstListOfNeurons, List<? extends Neuron> secondListOfNeurons) {
+        for (Neuron secondListNeuron : secondListOfNeurons) {
+            for (Neuron firstListNeuron : firstListOfNeurons) {
+                Connection connection = new Connection(firstListNeuron);
+                connections.add(connection);
+
+                secondListNeuron.addConnection(connection);
             }
         }
-    }
-
-    private void connectHiddenLayerWithHiddenLayer(HiddenLayer firstHiddenLayer, HiddenLayer secondHiddenLayer) {
-        for (HiddenNeuron hiddenNeuronFromSecondLayer : secondHiddenLayer.getHiddenNeurons()) {
-            for (HiddenNeuron hiddenNeuronFromFirstLayer : firstHiddenLayer.getHiddenNeurons()) {
-                hiddenNeuronFromSecondLayer.addConnection(createConnection(hiddenNeuronFromFirstLayer));
-            }
-        }
-    }
-
-    private void connectHiddenLayerWithOutputLayer(HiddenLayer hiddenLayer, OutputLayer outputLayer) {
-        for (Neuron outputNeuron : outputLayer.getNeurons()) {
-            for (Neuron hiddenNeuron : hiddenLayer.getNeurons()) {
-                outputNeuron.addConnection(createConnection(hiddenNeuron));
-            }
-        }
-    }
-
-    private void connectInputLayerWithOutputLayer(InputLayer inputLayer, OutputLayer outputLayer) {
-        for (Neuron outputNeuron : outputLayer.getNeurons()) {
-            for (Neuron inputNeuron : inputLayer.getNeurons()) {
-                outputNeuron.addConnection(createConnection(inputNeuron));
-            }
-        }
-    }
-
-    private Connection createConnection(Neuron source) {
-        Connection connection = new Connection(source);
-        connections.add(connection);
-
-        return connection;
     }
 
     private void connectLayers() {
         connections = new ArrayList<>();
 
         if (hiddenLayers.size() == 0) {
-            connectInputLayerWithOutputLayer(inputLayer, outputLayer);
+            connect(inputLayer.getNeurons(), outputLayer.getNeurons());
             return;
         }
 
-        connectInputLayerWithHiddenLayer(inputLayer, hiddenLayers.get(0));
+        connect(inputLayer.getNeurons(), hiddenLayers.get(0).getHiddenNeurons());
 
         for (int i = 0; i < hiddenLayers.size() - 1; i++) {
-            connectHiddenLayerWithHiddenLayer(hiddenLayers.get(i), hiddenLayers.get(i + 1));
+            connect(hiddenLayers.get(i).getNeurons(), hiddenLayers.get(i + 1).getHiddenNeurons());
         }
 
-        connectHiddenLayerWithOutputLayer(hiddenLayers.get(hiddenLayers.size() - 1), outputLayer);
+        connect(hiddenLayers.get(hiddenLayers.size() - 1).getNeurons(), outputLayer.getNeurons());
     }
 
     public void setWeights(List<Double> weights) {
@@ -114,7 +89,12 @@ public class NeuralNet {
             inputLayer.getInputNeurons().get(i).setValue(inputs.get(i));
         }
 
-        return outputLayer.getOutputNeurons().stream().map(Neuron::getValue).map(value -> value > 0 ? 1 : 0).collect(Collectors.toList());
+        List<Integer> outputs = new ArrayList<>();
+        for (OutputNeuron outputNeuron : outputLayer.getOutputNeurons()) {
+            outputs.add(outputNeuron.getValue() > 0 ? 1 : 0);
+        }
+
+        return outputs;
     }
 
     public void resetNetwork() {

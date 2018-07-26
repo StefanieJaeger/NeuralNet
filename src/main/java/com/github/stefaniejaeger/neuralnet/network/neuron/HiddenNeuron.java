@@ -23,11 +23,6 @@ public class HiddenNeuron extends Neuron {
     }
 
     @Override
-    public void reset() {
-        value = null;
-    }
-
-    @Override
     public void calculateValue(){
         double e;
         double xw = 0;

@@ -30,9 +30,4 @@ public class InputNeuron extends Neuron {
 
     }
 
-    @Override
-    public void reset() {
-        value = null;
-    }
-
 }

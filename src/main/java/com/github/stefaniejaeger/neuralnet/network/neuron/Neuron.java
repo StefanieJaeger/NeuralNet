@@ -9,7 +9,8 @@ import java.util.List;
  * @author Stefanie
  */
 public abstract class Neuron {
-    public Double value = null;
+
+    Double value = null;
     
     public double getValue(){
         if (value == null) {
@@ -25,6 +26,8 @@ public abstract class Neuron {
 
     public abstract void addConnection(Connection connection);
 
-    public abstract void reset();
+    public void reset() {
+        value = null;
+    }
 
 }

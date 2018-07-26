@@ -23,11 +23,6 @@ public class OutputNeuron extends Neuron {
     }
 
     @Override
-    public void reset() {
-        value = null;
-    }
-
-    @Override
     public void calculateValue(){
         double e = 0;
         double xw = 0;
@@ -47,4 +42,5 @@ public class OutputNeuron extends Neuron {
         text += '\n'+" making its value " + getValue();
         return text;
     }
+
 }
