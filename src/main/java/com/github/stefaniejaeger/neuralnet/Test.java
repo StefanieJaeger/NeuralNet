@@ -2,6 +2,7 @@ package com.github.stefaniejaeger.neuralnet;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Test {
     List<Double> inputs;
@@ -18,5 +19,13 @@ public class Test {
 
     public List<Double> getInputs(){
         return this.inputs;
+    }
+    
+    @Override
+    public String toString(){
+        return "Inputs " 
+                + inputs.stream().map(Object::toString).collect(Collectors.joining(",")) 
+                + " should lead to ouputs " 
+                + expectedOutputs.stream().map(Object::toString).collect(Collectors.joining(","));
     }
 }

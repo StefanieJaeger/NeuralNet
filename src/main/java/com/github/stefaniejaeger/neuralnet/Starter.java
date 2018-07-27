@@ -23,7 +23,7 @@ public class Starter {
     public static void main(String[] args) {
         //configurate the neural net structure
         NeuralNetConfiguration netConfig = new NeuralNetConfiguration();
-        netConfig.numberOfInputNeurons = 2;
+        netConfig.numberOfInputNeurons = 64;
         netConfig.numberOfOutputNeurons = 1;
         netConfig.numberOfHiddenLayers = 1;
         netConfig.numberOfNeuronsPerHiddenLayer = 2;
@@ -37,11 +37,8 @@ public class Starter {
         algConfig.neuralNet = net;
         algConfig.populationSize = 200;
 
-        List<Test> testCases = new ArrayList<>();
-        testCases.add(new Test(Arrays.asList(0.0,0.0), Arrays.asList(1)));
-        testCases.add(new Test(Arrays.asList(0.0,1.0), Arrays.asList(0)));
-        testCases.add(new Test(Arrays.asList(1.0,0.0), Arrays.asList(0)));
-        testCases.add(new Test(Arrays.asList(1.0,1.0), Arrays.asList(1)));
+        DataReader dataReader = new DataReader("./SmileyData.txt");
+        List<Test> testCases = dataReader.getTestData();
 
         RandomProvider randomProvider = new RealRandomProvider();
 
@@ -50,16 +47,12 @@ public class Starter {
         
         genAlg.testPrintAndScorePopulation(testCases);
         
-        //System.out.println(genAlg.winner);
-
-        int countr = 0;
         while(!genAlg.isDone()){
             genAlg.makeNextGeneration();
             genAlg.testPrintAndScorePopulation(testCases);
-            countr++;
         }
+        System.out.println(genAlg.winner);
         genAlg.writer.close();
-
     }
 
 }
