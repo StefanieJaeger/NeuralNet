@@ -23,54 +23,54 @@ public class DataReader {
     private List<List<Double>> trainingData;
     private List<List<Integer>> expectedResults;
     
-    public DataReader(String path){
+    public DataReader(String path) {
         this.filePath = path;
         trainingData = new ArrayList<>();
+        //first part in file is always training data, so we prepare
         trainingData.add(new ArrayList<>());
         expectedResults = new ArrayList<>();
     }
     
-    public List<Test> getTestData(){
+    public List<Test> getTestData() {
         readFileContent();
         List<Test> tests = new ArrayList<>();
-        for(int i = 0; i < expectedResults.size(); i++){
+        for(int i = 0; i < expectedResults.size(); i++) {
             tests.add(new Test(trainingData.get(i), expectedResults.get(i)));
             //System.out.println(new Test(trainingData.get(i), expectedResults.get(i)).toString());
         }
         return tests;
     }
     
-    public List<List<Double>> getTrainingData(){
+    public List<List<Double>> getTrainingData() {
         readFileContent();
         return trainingData;
     }
     
-    public List<List<Integer>> getExpectedResults(){
+    public List<List<Integer>> getExpectedResults() {
         readFileContent();
         return expectedResults;
     }
     
-    private void readFileContent(){
+    private void readFileContent() {
         try{
             FileReader file = new FileReader(filePath);
             BufferedReader bufferedReader = new BufferedReader(file);
             String line;
             boolean isTrainingData = true;
-            while((line = bufferedReader.readLine()) != null){
-                if(line.length() == 0){
+            while ((line = bufferedReader.readLine()) != null) {
+                if (line.length() == 0) {
                     isTrainingData = !isTrainingData;
-                    if(isTrainingData)
+                    if (isTrainingData) {
                         trainingData.add(new ArrayList<>());
-                    else
+                    } else {
                         expectedResults.add(new ArrayList<>());
+                    }
                     continue;
                 }
                 
-                if(isTrainingData){
+                if (isTrainingData) {
                     trainingData.get(trainingData.size()-1).addAll(getDataItemsFromLine(line));
-                }
-                else
-                {
+                } else {
                     expectedResults.get(expectedResults.size()-1).addAll(getResultItemsFromLine(line));
                 }
             }
@@ -79,19 +79,21 @@ public class DataReader {
         }     
     }
     
-    private List<Double> getDataItemsFromLine(String line){
+    private List<Double> getDataItemsFromLine(String line) {
         List<String> items = Arrays.asList(line.split(","));
         List<Double> dataItems = new ArrayList<>();
-        for(String item : items)
+        for (String item : items) {
             dataItems.add(Double.parseDouble(item));
+        }
         return dataItems;
     }
     
-    private List<Integer> getResultItemsFromLine(String line){
+    private List<Integer> getResultItemsFromLine(String line) {
         List<String> items = Arrays.asList(line.split(","));
         List<Integer> resultItems = new ArrayList<>();
-        for(String item : items)
+        for (String item : items) {
             resultItems.add(Integer.parseInt(item));
+        }
         return resultItems;        
     }
 }
