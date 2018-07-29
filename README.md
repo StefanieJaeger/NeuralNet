@@ -4,7 +4,7 @@
 
 #### This is a base structure of a neural net that uses *genetic algorithm*.
 
---
+---
 
 It's mainly thought as a practical exercise for me to understand how a neural net works but will hopefully still be usable in later projects.
 
