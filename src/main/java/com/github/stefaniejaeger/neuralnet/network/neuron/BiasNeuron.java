@@ -14,19 +14,19 @@ public class BiasNeuron extends Neuron {
 
     @Override
     Double calculateValue() {
-        LOGGER.error("Calling calculateValue on a Bias neuron");
+        LOGGER.error("Calling calculateValue on a bias neuron");
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void reset() {
-        LOGGER.error("Calling reset on a Bias neuron");
+        LOGGER.error("Calling reset on a bias neuron");
         throw new UnsupportedOperationException();
     }
 
     @Override
     public void addConnection(Connection connection) {
-        LOGGER.error("Calling addConnection on a Bias neuron");
+        LOGGER.error("Calling addConnection on a bias neuron");
         throw new UnsupportedOperationException();
     }
 

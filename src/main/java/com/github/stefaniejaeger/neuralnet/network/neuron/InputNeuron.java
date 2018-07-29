@@ -18,13 +18,13 @@ public class InputNeuron extends Neuron {
 
     @Override
     Double calculateValue() {
-        LOGGER.error("Calling calculateValue on a Bias neuron");
+        LOGGER.error("Calling calculateValue on an input neuron");
         throw new UnsupportedOperationException();
     }
     
     @Override
     public void addConnection(Connection connection) {
-        LOGGER.error("Calling addConnection on a Bias neuron");
+        LOGGER.error("Calling addConnection on an input neuron");
         throw new UnsupportedOperationException();
     }
 
