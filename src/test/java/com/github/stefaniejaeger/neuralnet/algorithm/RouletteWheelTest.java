@@ -1,13 +1,13 @@
 package com.github.stefaniejaeger.neuralnet.algorithm;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class RouletteWheelTest {
+public class RouletteWheelTest {
 
     @Test
-    void getRandomElementWorksWhenEmpty() {
+    public void getRandomElementWorksWhenEmpty() {
         RandomProvider randomProvider = new RandomProvider() {
             @Override
             public double getDoubleInRange(double start, double end) {
@@ -28,7 +28,7 @@ class RouletteWheelTest {
     }
 
     @Test
-    void getRandomElementReturnsExpectedElement() {
+    public void getRandomElementReturnsExpectedElement() {
         RandomProvider randomProvider = new RandomProvider() {
             @Override
             public double getDoubleInRange(double start, double end) {
