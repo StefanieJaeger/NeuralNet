@@ -1,5 +1,7 @@
 # NeuralNet
 
+[![Build Status](https://travis-ci.com/StefanieJaeger/NeuralNet.svg?token=U9MukhwMxwoLzPLAc6vx&branch=master)](https://travis-ci.com/StefanieJaeger/NeuralNet)
+
 #### This is a base structure of a neural net that uses *genetic algorithm*.
 
 --
