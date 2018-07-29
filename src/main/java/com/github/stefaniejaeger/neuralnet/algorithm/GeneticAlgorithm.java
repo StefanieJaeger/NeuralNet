@@ -3,6 +3,9 @@ package com.github.stefaniejaeger.neuralnet.algorithm;
 import com.github.stefaniejaeger.neuralnet.Test;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;

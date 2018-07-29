@@ -33,11 +33,13 @@ public class DataReader {
     
     public List<Test> getTestData() {
         readFileContent();
+
         List<Test> tests = new ArrayList<>();
         for(int i = 0; i < expectedResults.size(); i++) {
             tests.add(new Test(trainingData.get(i), expectedResults.get(i)));
             //System.out.println(new Test(trainingData.get(i), expectedResults.get(i)).toString());
         }
+
         return tests;
     }
     
@@ -74,7 +76,7 @@ public class DataReader {
                     expectedResults.get(expectedResults.size()-1).addAll(getResultItemsFromLine(line));
                 }
             }
-        } catch(IOException ioEx){
+        } catch(IOException ioEx) {
             
         }     
     }

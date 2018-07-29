@@ -16,7 +16,6 @@ public class Molecule {
         return value;
     }
 
-    // TODO move out of here
     public void mutate(RandomProvider randomProvider) {
         value = randomProvider.getDoubleInRange(-1, 1);
     }
