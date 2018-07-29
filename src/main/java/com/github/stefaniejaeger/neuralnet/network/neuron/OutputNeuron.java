@@ -1,6 +1,7 @@
 package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
+import com.github.stefaniejaeger.neuralnet.network.neuron.common.Helper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,14 +20,7 @@ public class OutputNeuron extends Neuron {
 
     @Override
     public void calculateValue() {
-        double e = 0;
-        double xw = 0;
-        //Sigmoid
-        for(Connection c : incomingConnections)
-            xw+=c.calculateOutput();
-        e = xw;
-        value = 1 / (1 + Math.exp(e * -1));
-        value = (value - 0.5) * 2;
+        value = Helper.calculateNeuronValue(incomingConnections);
     }
 
     @Override

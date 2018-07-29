@@ -23,13 +23,13 @@ public class Connection {
         return weight * from.getValue();
     }
 
+    public void setWeight(Double weight) {
+        this.weight = weight;
+    }
+
     @Override
     public String toString() {
         return "connection from " + from.toString() + " and weight " + weight;
-    }
-
-    public void setWeight(Double weight) {
-        this.weight = weight;
     }
 
 }
