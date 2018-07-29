@@ -11,7 +11,7 @@ public class RouletteWheel<FieldType> {
     private RandomProvider randomProvider;
     private List<FieldType> fields;
 
-    private final Logger LOGGER = LoggerFactory.getLogger(RouletteWheel.class);
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
     public RouletteWheel(RandomProvider randomProvider) {
         this.randomProvider = randomProvider;

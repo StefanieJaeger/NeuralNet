@@ -19,13 +19,17 @@ public class HiddenNeuron extends Neuron {
     }
 
     @Override
-    public void calculateValue() {
-        value = Helper.calculateNeuronValue(incomingConnections);
+    Double calculateValue() {
+        return Helper.calculateNeuronValue(incomingConnections);
     }
 
     @Override
     public void addConnection(Connection connection) {
         incomingConnections.add(connection);
+    }
+
+    public Integer getNumberOfIncomingConnections() {
+        return incomingConnections.size();
     }
 
     @Override

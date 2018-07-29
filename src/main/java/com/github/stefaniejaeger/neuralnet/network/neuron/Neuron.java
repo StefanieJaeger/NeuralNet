@@ -10,15 +10,15 @@ public abstract class Neuron {
 
     Double value = null;
 
-    public double getValue(){
+    abstract Double calculateValue();
+
+    public final Double getValue(){
         if (value == null) {
-            calculateValue();
+            value = calculateValue();
         }
 
         return value;
     }
-
-    public abstract void calculateValue();
 
     public void reset() {
         value = null;

@@ -2,7 +2,6 @@ package com.github.stefaniejaeger.neuralnet.algorithm;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -10,7 +9,6 @@ public class Chromosome {
 
     private List<Molecule> dna;
 
-    // TODO
     public Chromosome(Chromosome another) {
         this.dna = new ArrayList<>();
 
