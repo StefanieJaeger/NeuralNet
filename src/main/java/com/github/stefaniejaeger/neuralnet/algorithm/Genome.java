@@ -14,22 +14,41 @@ public class Genome {
         this.chromosome = new Chromosome(chromosome);
     }
     
+    /**
+     * Returns how many times the genome calculated the correct result
+     * @return 
+     */
     public double getFitness(){
         return fitness;
     }
     
+    /**
+     * Sets the number of correctly calculated results for this genome
+     * @param score 
+     */
     public void setFitness(double score){
         fitness = score;
     }
 
+    /**
+     * Increases the number of correctly calculated results for this genome by one
+     */
     public void increaseFitness(){
         fitness++;
     }
 
+    /**
+     * Returns the chromosome, containing the DNA
+     * @return 
+     */
     public Chromosome getChromosome(){
         return chromosome;
     }
     
+    /**
+     * Sets the chromosome
+     * @param chromosome 
+     */
     public void setChromosome(Chromosome chromosome){
         this.chromosome = chromosome;
     }

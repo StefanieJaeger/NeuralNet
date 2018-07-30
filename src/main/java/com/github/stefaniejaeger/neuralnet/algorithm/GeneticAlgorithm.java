@@ -3,8 +3,8 @@ package com.github.stefaniejaeger.neuralnet.algorithm;
 import com.github.stefaniejaeger.neuralnet.Test;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
@@ -120,6 +120,11 @@ public class GeneticAlgorithm {
         return parents;
     }
 
+    /**
+     * Generate two genomes with random mix of mom and dad's DNA then add them to newPopulation
+     * @param mom
+     * @param dad 
+     */
     private void makeBabies(Genome mom, Genome dad) {
         if (crossoverRate < randomProvider.getDoubleInRange(0, 1)) {
             //mom and dad get to live on if they don't fuck
@@ -150,6 +155,11 @@ public class GeneticAlgorithm {
         newPopulation.add(kid2);
     }
 
+    /**
+     * For each molecule in DNA, get random double, if it matches mutationRate, 
+     * switch molecule for random double
+     * @param genome 
+     */
     private void mutate(Genome genome) {
         for (Molecule molecule : genome.getChromosome().getDNA()) {
             if (mutationRate > randomProvider.getDoubleInRange(0, 1)) {
@@ -184,14 +194,22 @@ public class GeneticAlgorithm {
         writer.println(generationCount + "," + getPopulationAverageFitness());
         writer.flush();
     }
-
+    
+    /**
+     * Get the average fitness of all members of a population
+     * @return 
+     */
     private double getPopulationAverageFitness(){
         double fit = 0.0;
         for(Genome gen : population)
             fit += gen.getFitness();
         return fit/population.size();
     }
-
+    
+    /**
+     * Is true if at least one genome has reached full fitness
+     * @return 
+     */
     public boolean isDone() {
         return winner.size() >= 1;
     }

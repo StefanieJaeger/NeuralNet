@@ -37,6 +37,10 @@ public class NeuralNet {
         connectLayers();
     }
 
+    /**
+     * Creates a new bias neuron with the bias value from the configuration
+     * @return 
+     */
     private BiasNeuron createBiasNeuron() {
         return new BiasNeuron(configuration.bias);
     }
@@ -55,10 +59,13 @@ public class NeuralNet {
         }
     }
 
+    /**
+     * Connects all the neurons from each layer to all the neurons in the following layer
+     */
     private void connectLayers() {
         connections = new ArrayList<>();
 
-        if (hiddenLayers.size() == 0) {
+        if (hiddenLayers.isEmpty()) {
             connect(inputLayer.getNeurons(), outputLayer.getNeurons());
             return;
         }
@@ -72,6 +79,10 @@ public class NeuralNet {
         connect(hiddenLayers.get(hiddenLayers.size() - 1).getNeurons(), outputLayer.getNeurons());
     }
 
+    /**
+     * Sets the weights for all connections to the weights specified in the list
+     * @param weights 
+     */
     public void setWeights(List<Double> weights) {
         assert weights.size() == connections.size();
 
@@ -80,6 +91,11 @@ public class NeuralNet {
         }
     }
 
+    /**
+     * Let's the whole net calculate the output, then rounds to 0 or 1
+     * @param inputs
+     * @return calculated outputs
+     */
     public List<Integer> calculateOutputs(List<Double> inputs) {
         resetNetwork();
 
@@ -97,6 +113,9 @@ public class NeuralNet {
         return outputs;
     }
 
+    /**
+     * Resets each layer in the net
+     */
     public void resetNetwork() {
         inputLayer.getInputNeurons().forEach(Neuron::reset);
 

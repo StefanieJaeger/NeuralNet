@@ -9,6 +9,10 @@ public class Chromosome {
 
     private List<Molecule> dna;
 
+    /**
+     * 
+     * @param another The chromosome of another Genome, its DNA will be copied to this chromosome 
+     */
     public Chromosome(Chromosome another) {
         this.dna = new ArrayList<>();
 
@@ -21,6 +25,11 @@ public class Chromosome {
         this.dna = dna;
     }
 
+    /**
+     * Sets own DNA to a combination of own DNA and DNA of otherChromosome and vice versa
+     * @param index At what index to cross DNAs
+     * @param otherChromosome Second chromosome to take DNA from and change its DNA
+     */
     public void crossover(int index, Chromosome otherChromosome) {
         List<Molecule> startOfDNA = dna.subList(0, index);
         List<Molecule> endOfDNA = dna.subList(index, dna.size());
@@ -31,7 +40,11 @@ public class Chromosome {
         this.dna = Stream.concat(startOfDNA.stream(), endOfOtherDNA.stream()).collect(Collectors.toList());
         otherChromosome.dna = Stream.concat(startOfOtherDNA.stream(), endOfDNA.stream()).collect(Collectors.toList());
     }
-
+    
+    /**
+     * Returns list of Molecules, the DNA
+     * @return 
+     */
     public List<Molecule> getDNA() {
         return dna;
     }
