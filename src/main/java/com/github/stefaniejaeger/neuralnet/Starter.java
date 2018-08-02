@@ -1,9 +1,9 @@
 package com.github.stefaniejaeger.neuralnet;
 
-import com.github.stefaniejaeger.neuralnet.algorithm.GeneticAlgorithm;
-import com.github.stefaniejaeger.neuralnet.algorithm.GeneticAlgorithmConfiguration;
-import com.github.stefaniejaeger.neuralnet.algorithm.RandomProvider;
-import com.github.stefaniejaeger.neuralnet.algorithm.RealRandomProvider;
+import com.github.stefaniejaeger.neuralnet.algorithm.genetic.GeneticAlgorithm;
+import com.github.stefaniejaeger.neuralnet.algorithm.genetic.GeneticAlgorithmConfiguration;
+import com.github.stefaniejaeger.neuralnet.algorithm.genetic.RandomProvider;
+import com.github.stefaniejaeger.neuralnet.algorithm.genetic.RealRandomProvider;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNetConfiguration;
 

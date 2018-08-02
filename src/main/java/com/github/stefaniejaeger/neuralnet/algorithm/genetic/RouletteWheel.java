@@ -1,4 +1,4 @@
-package com.github.stefaniejaeger.neuralnet.algorithm;
+package com.github.stefaniejaeger.neuralnet.algorithm.genetic;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

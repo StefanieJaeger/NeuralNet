@@ -1,4 +1,4 @@
-package com.github.stefaniejaeger.neuralnet.algorithm;
+package com.github.stefaniejaeger.neuralnet.algorithm.genetic;
 
 import com.github.stefaniejaeger.neuralnet.Test;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;

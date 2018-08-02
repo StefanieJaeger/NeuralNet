@@ -1,4 +1,4 @@
-package com.github.stefaniejaeger.neuralnet.algorithm;
+package com.github.stefaniejaeger.neuralnet.algorithm.genetic;
 
 public interface RandomProvider {
 
