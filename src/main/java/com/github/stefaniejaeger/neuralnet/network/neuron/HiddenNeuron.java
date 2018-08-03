@@ -42,4 +42,9 @@ public class HiddenNeuron extends Neuron {
         return text;
     }
 
+    @Override
+    public List<Connection> getConnections() {
+      return incomingConnections;
+    }
+
 }

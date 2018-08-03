@@ -8,6 +8,7 @@ package com.github.stefaniejaeger.neuralnet.algorithm.backpropagation;
 import com.github.stefaniejaeger.neuralnet.Test;
 import com.github.stefaniejaeger.neuralnet.network.Connection;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
+import com.github.stefaniejaeger.neuralnet.network.layer.InputLayer;
 import com.github.stefaniejaeger.neuralnet.network.layer.Layer;
 import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
 import java.util.ArrayList;
@@ -28,25 +29,91 @@ public class Backpropagation {
         changesAndTest = new ArrayList<>();
     }
     
-    public void propagate(List<Test> tests) {
+    /**
+     * Finds changes for weights, biases and neurons in neural net to help it get closer to result
+     * @param tests
+     * @return Object with new values for weights, biases and neurons
+     */
+    public ChangesForTest propagate(List<Test> tests) {
         this.tests = tests;
         for(Test test : tests) {
             currentTest = test;
-            propagateForTest(test);
+            changesAndTest.add(propagateForTest(test));
         }
+        return getFinalChangesForAllTest();
     }
     
-    private void propagateForTest(Test test) {                 
-        List<Double> changes = getChangesForWeights(network.getOutputLayer());
-        for(Layer hiddenLayer : network.getHiddenLayers()){
-            changes.addAll(getChangesForWeights(hiddenLayer));
+    /**
+     * Returns changes for the network for a certain test
+     * @param test
+     * @return 
+     */
+    private ChangesForTest propagateForTest(Test test) {                 
+        //TODO copy network and make changes there. apply changes to last layer,
+        //then go to next layer
+        List<Double> weights = getChangesForWeights(network.getOutputLayer(), false);
+        for(Layer hiddenLayer : network.getHiddenLayers()) {
+            weights.addAll(getChangesForWeights(hiddenLayer, true));
         }
-        changes.addAll(getChangesForWeights(network.getInputLayer()));
         
         ChangesForTest changesForTest = new ChangesForTest(test);
-        changesForTest.setWeightChanges(changes);
-        changesAndTest.add(changesForTest);
+        changesForTest.setWeightChanges(weights);
         //network.setWeights(weights);
+        return changesForTest;
+    }
+    
+    /**
+     * Calculate the average change for every single weight, bias and 
+     * neuron from the changes every test wants
+     * @return 
+     */
+    private ChangesForTest getFinalChangesForAllTest(){
+        List<Double> doubles = new ArrayList<>();
+        List<Integer> ints = new ArrayList<>();
+        ChangesForTest average = new ChangesForTest(new Test(doubles, ints));
+        
+        List<Double> weights = new ArrayList<>();
+        List<Double> biases = new ArrayList<>();
+        List<Double> neurons = new ArrayList<>();
+        
+        int weightCounter = 0;
+        int biasCounter = 0;
+        int neuronCounter = 0;
+        
+        for(ChangesForTest change : changesAndTest){
+            weightCounter = 0;
+            biasCounter = 0;
+            neuronCounter = 0;
+            
+            for(double weightChange : change.getWeightChanges()){
+                weights.set(weightCounter, weights.get(weightCounter) + weightChange);
+                weightCounter++;
+            }
+            for(double biasChange : change.getBiasChanges()){
+                biases.set(biasCounter, biases.get(biasCounter) + biasChange);
+                biasCounter++;
+            }
+            for(double neuronChange : change.getNeuronChanges()){
+                neurons.set(neuronCounter, neurons.get(neuronCounter) + neuronChange);
+                neuronCounter++;
+            }
+        }       
+        
+        for(int i = 0; i < weights.size(); i++){
+            weights.set(i, weights.get(i) / weightCounter);
+        }
+        for(int i = 0; i < biases.size(); i++){
+            biases.set(i, biases.get(i) / biasCounter);
+        }
+        for(int i = 0; i < neurons.size(); i++){
+            neurons.set(i, neurons.get(i) / neuronCounter);
+        }
+        
+        average.setWeightChanges(weights);
+        average.setBiasChanges(biases);
+        average.setNeuronChanges(neurons);
+        
+        return average;
     }
     
     /**
@@ -57,107 +124,93 @@ public class Backpropagation {
      * its expected output (only works for output neurons)
      * @return 
      */
-    private Double getCostForWeight(Neuron neuron) {
-        int expectedOutput = (int)getExpectedValue(neuron);
+    private Double getCostForWeight(Neuron neuron, Layer layer) {
+        int expectedOutput = (int)getExpectedValue(neuron, layer);
         Double output = neuron.getValue();
         return (expectedOutput - output) * (expectedOutput - output);
     }
     
-    private Double getWeightCostGradientRelation(Connection connection, Neuron currentNeuron, Layer layer, boolean isHiddenLayer){
-        //dC0/dwL = dzL/dwL * daL/dzL * dC0L/daL        
-        double biasValue;
+    /**
+     * Get the impact of a change of a certain weight on the overall cost of a certain neuron
+     * @param connection The connection whose weight to use
+     * @param currentNeuron The neuron whose value to use
+     * @param layer The layer the neuron is in
+     * @param isHiddenLayer Whether the layer is a hidden or an output layer
+     * @return 
+     */
+    private Double getWeightAndCostDerivativeRelation(Connection connection, Neuron currentNeuron, Layer layer, boolean isHiddenLayer) {
+        //dC0/dwL = dzL/dwL * daL/dzL * dC0L/daL   
+        double biasValue = layer.getBiasNeuron().getValue();
         double previousNeuronValue = connection.getSource().getValue();
         double zValue = connection.getWeight() * previousNeuronValue * biasValue;
         double neuronValue = currentNeuron.getValue();
-        double expectedNeuronValue = getExpectedValue(currentNeuron);
-        double costNeuronGradRelation;
-        double neuronZGradRelation;
-        double zWeightGradRelation;
-        double costWeightGradRelation;
+        double costAnNeuronDerivativeRelation;
+        double neuronAndZDerivativeRelation;
+        double zAndWeightDerivativeRelation;
+        double costAndWeightDerivativeRelation;
                 
-         if(isHiddenLayer) {
-        costNeuronGradRelation = 2*(neuronValue - getExpectedValue(currentNeuron));
-                } else {
-        costNeuronGradRelation;                 
-                }
+        if(isHiddenLayer) {
+            costAnNeuronDerivativeRelation = getGradientOfHiddenLayerWithCost();       
+        } else {
+            //simple calculation to get value for dC0/aL for output neuron
+            costAnNeuronDerivativeRelation = 2*(neuronValue - getExpectedValue(currentNeuron, layer));         
+        }
          
-        zWeightGradRelation = previousNeuronValue;
-        neuronZGradRelation = sig(zValue);
+        zAndWeightDerivativeRelation = previousNeuronValue;
+        neuronAndZDerivativeRelation = derivativeSigmoid(zValue);
         
-        costWeightGradRelation = zWeightGradRelation * neuronZGradRelation * costNeuronGradRelation;
+        costAndWeightDerivativeRelation = zAndWeightDerivativeRelation * neuronAndZDerivativeRelation * costAnNeuronDerivativeRelation;
         
-        return costWeightGradRelation;
+        return costAndWeightDerivativeRelation;
     }
-    private Double getNeuronCostGradientRelation(Connection connection, Neuron currentNeuron, boolean isHiddenLayer){
-        //dC0/daL-1 = dzL/daL-1 * daL/dzL * dC0L/daL   
-        double biasValue;
-        double previousNeuronValue = connection.getSource().getValue();
-        double zValue = connection.getWeight() * previousNeuronValue * biasValue;
-        double neuronValue = currentNeuron.getValue();
-        double expectedNeuronValue = getExpectedValue(currentNeuron);
-        double costNeuronGradRelation;
-        double neuronZGradRelation;
-        double zPreviousNeuronGradRelation;
-        double costPreviousNeuronGradRelation;
-                if(isHiddenLayer) {
-        costNeuronGradRelation = previousNeuronValue;
-                } else {
-        costNeuronGradRelation;                 
-                }
-        zPreviousNeuronGradRelation = previousNeuronValue;
-        neuronZGradRelation = sig(zValue);
-        
-        costPreviousNeuronGradRelation = zPreviousNeuronGradRelation * neuronZGradRelation * costNeuronGradRelation;
-        
-        return costPreviousNeuronGradRelation;
-    }
-    
-     private Double getBiasCostGradientRelation(Connection connection, Neuron currentNeuron, Layer layer, boolean isHiddenLayer){
-        //dC0/dbL = dzL/dbL * daL/dzL * dC0L/daL        
-        double biasValue;
-        double previousNeuronValue = connection.getSource().getValue();
-        double zValue = connection.getWeight() * previousNeuronValue * biasValue;
-        double neuronValue = currentNeuron.getValue();
-        double expectedNeuronValue = getExpectedValue(currentNeuron);
-        double costNeuronGradRelation;
-        double neuronZGradRelation;
-        double costBiasGradRelation;
-                
-         if(isHiddenLayer) {
-        costNeuronGradRelation = previousNeuronValue;
-                } else {
-        costNeuronGradRelation;                
-                }
-        
-        neuronZGradRelation = sig(zValue);
-        costBiasGradRelation = neuronZGradRelation * costNeuronGradRelation;
-        
-        return costBiasGradRelation;
-    }
-    
-    private List<Double> getChangesForWeights(Layer layer){
+
+     /**
+      * Gets the changes for all connections between the passed layer and 
+      * the previous one.
+      * @param layer
+      * @param isHiddenLayer
+      * @return 
+      */
+    private List<Double> getChangesForWeights(Layer layer, boolean isHiddenLayer) {
         List<Double> weights = new ArrayList<>();
-        for(Neuron neuron : layer.getNeurons()){
+        for(Neuron neuron : layer.getNeurons()) {
             weights.add(0.0);
-            boolean isHiddenLayer;
-            /*for(Connection connection : neuron.getConnections()){
-                weights.set(weights.size()-1, getWeightCostGradientRelation(connection, neuron, layer, isHiddenLayer) * getCostForWeight(neuron, layer.getNeurons().indexOf(neuron)));
-            }*/
+            for(Connection connection : neuron.getConnections()) {            
+                double newWeightValue = getWeightAndCostDerivativeRelation(connection, neuron, layer, isHiddenLayer) * getCostForWeight(neuron, layer);
+                weights.set(weights.size()-1, newWeightValue);
+            }
             weights.set(weights.size()-1, weights.get(weights.size() -1) / neuron.getConnections().size());
         }
         return weights;
     }
     
-    private List<Double> getChangeForPreviousNeuron(Neuron currentNeuron, Neuron previousNeuron) {
-        //return getWantedChangeForPreviousNeuron() * getCostForPreviousNeuron();
+    /**
+     * 
+     * @return 
+     */
+    private double getGradientOfHiddenLayerWithCost() {
+        //weird E(top: nL+1 (-1), bottom: j=0)  w(L+1)jk * o'(zj(L+1)) * dC/daj(L+1) 
+        //TODO implement
     }
     
-    private double getExpectedValue(Neuron neuron){
-        
+    /**
+     * Returns expected value for output neurons
+     * @param neuron
+     * @param layer
+     * @return 
+     */
+    private int getExpectedValue(Neuron neuron, Layer layer) {
+        int indexOfNeuron = layer.getNeurons().indexOf(neuron);
+        return currentTest.getExpectedOutputs().get(indexOfNeuron);
     }
     
-    private double sig(Double z) {
-        return 0.0;
-        //return Math.ln(z/(1-z));
+    /**
+     * 
+     * @param z
+     * @return 
+     */
+    private double derivativeSigmoid(Double z) {
+        double sigmoid = 1 / (1 + Math.exp(z * -1));
+        return sigmoid * (1 - sigmoid);     
     }
 }

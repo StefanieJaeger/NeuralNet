@@ -1,6 +1,7 @@
 package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,6 +34,12 @@ public class BiasNeuron extends Neuron {
     @Override
     public String toString() {
         return "Bias neuron with value " + value;
+    }
+
+    @Override
+    public List<Connection> getConnections() {        
+        LOGGER.error("Calling getConnections on a bias neuron");
+        throw new UnsupportedOperationException();
     }
 
 }

@@ -1,5 +1,6 @@
 package com.github.stefaniejaeger.neuralnet.network.layer;
 
+import com.github.stefaniejaeger.neuralnet.network.neuron.BiasNeuron;
 import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
 import com.github.stefaniejaeger.neuralnet.network.neuron.OutputNeuron;
 
@@ -12,6 +13,8 @@ import java.util.List;
  */
 public class OutputLayer implements Layer {
 
+    private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());
+    
     private List<OutputNeuron> outputNeurons;
 
     public OutputLayer(int numberOfNeurons) {
@@ -29,6 +32,12 @@ public class OutputLayer implements Layer {
 
     public List<OutputNeuron> getOutputNeurons() {
         return outputNeurons;
+    }
+
+    @Override
+    public BiasNeuron getBiasNeuron() {     
+        LOGGER.error("Calling getBiasNeuron on an output neuron");
+        throw new UnsupportedOperationException(); 
     }
 
 }

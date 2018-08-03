@@ -37,5 +37,9 @@ public class InputLayer implements Layer {
     public List<InputNeuron> getInputNeurons() {
         return inputNeurons;
     }
+    
+    public BiasNeuron getBiasNeuron(){
+        return biasNeuron;
+    }
 
 }

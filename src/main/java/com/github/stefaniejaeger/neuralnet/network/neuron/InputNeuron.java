@@ -1,6 +1,7 @@
 package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,6 +32,12 @@ public class InputNeuron extends Neuron {
     @Override
     public String toString() {
         return "input neuron with value " + value;
+    }
+
+    @Override
+    public List<Connection> getConnections() {    
+        LOGGER.error("Calling getConnections on an input neuron");
+        throw new UnsupportedOperationException(); 
     }
 
 }

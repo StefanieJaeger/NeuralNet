@@ -41,4 +41,9 @@ public class OutputNeuron extends Neuron {
         return text;
     }
 
+    @Override
+    public List<Connection> getConnections() {
+        return incomingConnections;
+    }
+
 }

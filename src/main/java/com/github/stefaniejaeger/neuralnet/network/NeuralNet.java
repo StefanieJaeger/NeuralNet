@@ -10,6 +10,7 @@ import com.github.stefaniejaeger.neuralnet.network.neuron.OutputNeuron;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author Stefanie
@@ -102,6 +103,10 @@ public class NeuralNet {
     
     public OutputLayer getOutputLayer() {
         return outputLayer;
+    }
+    
+    public List<Connection> getConnectionsFromNeuron(Neuron neuron){
+        return connections.stream().filter(c->c.getSource() == neuron).collect(Collectors.toList());
     }
         
     /**

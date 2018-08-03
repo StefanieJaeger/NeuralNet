@@ -21,6 +21,10 @@ public class Test {
         return this.inputs;
     }
     
+    public List<Integer> getExpectedOutputs(){
+        return expectedOutputs;
+    }
+    
     @Override
     public String toString(){
         return "Inputs " 

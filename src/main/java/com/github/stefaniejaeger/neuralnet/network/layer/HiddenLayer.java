@@ -42,5 +42,9 @@ public class HiddenLayer implements Layer {
     public List<HiddenNeuron> getHiddenNeurons() {
         return hiddenNeurons;
     }
+    
+    public BiasNeuron getBiasNeuron(){
+        return biasNeuron;
+    }
 
 }
