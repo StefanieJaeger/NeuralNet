@@ -8,10 +8,10 @@ package com.github.stefaniejaeger.neuralnet.algorithm.backpropagation;
 import com.github.stefaniejaeger.neuralnet.Test;
 import com.github.stefaniejaeger.neuralnet.network.Connection;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
-import com.github.stefaniejaeger.neuralnet.network.layer.InputLayer;
 import com.github.stefaniejaeger.neuralnet.network.layer.Layer;
 import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -20,7 +20,6 @@ import java.util.List;
  */
 public class Backpropagation {
     private NeuralNet network;
-    private List<Test> tests;
     private Test currentTest;
     private List<ChangesForTest> changesAndTest;
     
@@ -35,10 +34,13 @@ public class Backpropagation {
      * @return Object with new values for weights, biases and neurons
      */
     public ChangesForTest propagate(List<Test> tests) {
-        this.tests = tests;
         for(Test test : tests) {
             currentTest = test;
+            try {
             changesAndTest.add(propagateForTest(test));
+            } catch (CloneNotSupportedException cE) {
+                
+            }
         }
         return getFinalChangesForAllTest();
     }
@@ -48,17 +50,27 @@ public class Backpropagation {
      * @param test
      * @return 
      */
-    private ChangesForTest propagateForTest(Test test) {                 
+    private ChangesForTest propagateForTest(Test test) throws CloneNotSupportedException {                 
         //TODO copy network and make changes there. apply changes to last layer,
         //then go to next layer
-        List<Double> weights = getChangesForWeights(network.getOutputLayer(), false);
-        for(Layer hiddenLayer : network.getHiddenLayers()) {
-            weights.addAll(getChangesForWeights(hiddenLayer, true));
+        NeuralNet neuralNet = (NeuralNet)network.clone();
+        ChangesForTest changesForTest = new ChangesForTest(test);
+        
+        List<Double> weights = getChangeForWeights(neuralNet.getOutputLayer(), false);
+        for(Layer hiddenLayer : neuralNet.getHiddenLayers()) {
+            weights.addAll(getChangeForWeights(hiddenLayer, true));
         }
         
-        ChangesForTest changesForTest = new ChangesForTest(test);
         changesForTest.setWeightChanges(weights);
-        //network.setWeights(weights);
+        neuralNet.setWeights(weights);
+        
+        List<Double> biases = Arrays.asList(getChangeForBias(neuralNet.getOutputLayer(), false));
+        for(Layer hiddenLayer : neuralNet.getHiddenLayers()) {
+            biases.add(getChangeForBias(hiddenLayer, true));
+        }
+        
+        changesForTest.setWeightChanges(biases);
+        
         return changesForTest;
     }
     
@@ -163,6 +175,32 @@ public class Backpropagation {
         
         return costAndWeightDerivativeRelation;
     }
+    
+        private Double getBiasAndCostDerivativeRelation(Connection connection, Neuron currentNeuron, Layer layer, boolean isHiddenLayer) {
+        //dC0/dbL = dzL/dbL * daL/dzL * dC0L/daL   
+        double biasValue = layer.getBiasNeuron().getValue();
+        double previousNeuronValue = connection.getSource().getValue();
+        double zValue = connection.getWeight() * previousNeuronValue * biasValue;
+        double neuronValue = currentNeuron.getValue();
+        double costAnNeuronDerivativeRelation;
+        double zAndWeightDerivativeRelation;
+        double neuronAndZDerivativeRelation;
+        double costAndBiasDerivativeRelation;
+                
+        if(isHiddenLayer) {
+            costAnNeuronDerivativeRelation = getGradientOfHiddenLayerWithCost();       
+        } else {
+            //simple calculation to get value for dC0/aL for output neuron
+            costAnNeuronDerivativeRelation = 2*(neuronValue - getExpectedValue(currentNeuron, layer));         
+        }
+         
+        zAndWeightDerivativeRelation = biasValue / biasValue;
+        neuronAndZDerivativeRelation = derivativeSigmoid(zValue);
+        
+        costAndBiasDerivativeRelation = zAndWeightDerivativeRelation * neuronAndZDerivativeRelation * costAnNeuronDerivativeRelation;
+        
+        return costAndBiasDerivativeRelation;
+    }
 
      /**
       * Gets the changes for all connections between the passed layer and 
@@ -171,7 +209,7 @@ public class Backpropagation {
       * @param isHiddenLayer
       * @return 
       */
-    private List<Double> getChangesForWeights(Layer layer, boolean isHiddenLayer) {
+    private List<Double> getChangeForWeights(Layer layer, boolean isHiddenLayer) {
         List<Double> weights = new ArrayList<>();
         for(Neuron neuron : layer.getNeurons()) {
             weights.add(0.0);
@@ -184,6 +222,23 @@ public class Backpropagation {
         return weights;
     }
     
+    private Double getChangeForBias(Layer layer, boolean isHiddenLayer){
+        List<Double> biases = new ArrayList<>();
+        double bias;
+        for(Neuron neuron : layer.getNeurons()) {
+            biases.add(0.0);
+            for(Connection connection : neuron.getConnections()) {            
+                double newBiasValue = getBiasAndCostDerivativeRelation(connection, neuron, layer, isHiddenLayer) * getCostForWeight(neuron, layer);
+                // Add up every change every connection wants to make
+                biases.set(biases.size()-1, newBiasValue);
+            }
+            // Get the average change every connection of a neuron wants to make
+            biases.set(biases.size()-1, biases.get(biases.size() -1) / neuron.getConnections().size());
+        }
+        bias = biases.stream().mapToInt(Integer::intValue).sum();
+        return bias / biases.size();
+    }
+    
     /**
      * 
      * @return 
@@ -191,6 +246,7 @@ public class Backpropagation {
     private double getGradientOfHiddenLayerWithCost() {
         //weird E(top: nL+1 (-1), bottom: j=0)  w(L+1)jk * o'(zj(L+1)) * dC/daj(L+1) 
         //TODO implement
+        return 0.0;
     }
     
     /**

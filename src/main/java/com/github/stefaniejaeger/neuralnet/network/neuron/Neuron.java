@@ -1,6 +1,7 @@
 package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
+import java.util.List;
 
 /**
  *
@@ -25,5 +26,7 @@ public abstract class Neuron {
     }
 
     public abstract void addConnection(Connection connection);
-
+    
+    public abstract List<Connection> getConnections();
+    
 }

@@ -108,6 +108,11 @@ public class NeuralNet {
     public List<Connection> getConnectionsFromNeuron(Neuron neuron){
         return connections.stream().filter(c->c.getSource() == neuron).collect(Collectors.toList());
     }
+    
+    @Override
+    public NeuralNet clone() throws CloneNotSupportedException {
+        return (NeuralNet)super.clone();
+    }
         
     /**
      * Let's the whole net calculate the output, then rounds to 0 or 1
