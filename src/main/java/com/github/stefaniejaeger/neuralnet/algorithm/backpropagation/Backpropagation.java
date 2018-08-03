@@ -19,83 +19,145 @@ import java.util.List;
  */
 public class Backpropagation {
     private NeuralNet network;
-    private Test test;
+    private List<Test> tests;
+    private Test currentTest;
+    private List<ChangesForTest> changesAndTest;
     
-    public Backpropagation(NeuralNet net){
+    public Backpropagation(NeuralNet net) {
         network = net;
+        changesAndTest = new ArrayList<>();
     }
     
-    public void propagate(Test test){
-        this.test = test;
-        
-        List<Double> weights = network.getWeights();
+    public void propagate(List<Test> tests) {
+        this.tests = tests;
+        for(Test test : tests) {
+            currentTest = test;
+            propagateForTest(test);
+        }
+    }
+    
+    private void propagateForTest(Test test) {                 
         List<Double> changes = getChangesForWeights(network.getOutputLayer());
-        weights = weights.subList(0, weights.size() - changes.size());
-        weights.addAll(0, changes);
-        network.setWeights(weights);
+        for(Layer hiddenLayer : network.getHiddenLayers()){
+            changes.addAll(getChangesForWeights(hiddenLayer));
+        }
+        changes.addAll(getChangesForWeights(network.getInputLayer()));
+        
+        ChangesForTest changesForTest = new ChangesForTest(test);
+        changesForTest.setWeightChanges(changes);
+        changesAndTest.add(changesForTest);
+        //network.setWeights(weights);
     }
     
-    private Double getCost(Neuron neuron, int positionInLayer){
-        int expectedOutput = getExpectedOutput(positionInLayer);
+    /**
+     * The cost for a neuron is the difference between the expected output 
+     * and actual output. We square it to eliminate negative values
+     * @param neuron The neuron whose cost we want
+     * @param positionInLayer The position in its layer let's us get
+     * its expected output (only works for output neurons)
+     * @return 
+     */
+    private Double getCostForWeight(Neuron neuron) {
+        int expectedOutput = (int)getExpectedValue(neuron);
         Double output = neuron.getValue();
         return (expectedOutput - output) * (expectedOutput - output);
     }
     
-    private Double getWantedChangeForWeight(Connection connection, Neuron neuron, Layer layer){
-        //dC0/dwL = dzL/dwL * daL/dzL * dC0L/daL
-        double difNeuron;       
-        double valuePreviousNeuron;
+    private Double getWeightCostGradientRelation(Connection connection, Neuron currentNeuron, Layer layer, boolean isHiddenLayer){
+        //dC0/dwL = dzL/dwL * daL/dzL * dC0L/daL        
+        double biasValue;
+        double previousNeuronValue = connection.getSource().getValue();
+        double zValue = connection.getWeight() * previousNeuronValue * biasValue;
+        double neuronValue = currentNeuron.getValue();
+        double expectedNeuronValue = getExpectedValue(currentNeuron);
+        double costNeuronGradRelation;
+        double neuronZGradRelation;
+        double zWeightGradRelation;
+        double costWeightGradRelation;
+                
+         if(isHiddenLayer) {
+        costNeuronGradRelation = 2*(neuronValue - getExpectedValue(currentNeuron));
+                } else {
+        costNeuronGradRelation;                 
+                }
+         
+        zWeightGradRelation = previousNeuronValue;
+        neuronZGradRelation = sig(zValue);
         
-        double difCostDifNeuron = 2(divNeuron - y);
-        double difNeuronDifZ;
-        double difZDifWeight = valuePreviousNeuron;
-        double difCostDvWeight = difCostDifNeuron * difNeuronDifZ * difZDifWeight;
+        costWeightGradRelation = zWeightGradRelation * neuronZGradRelation * costNeuronGradRelation;
         
+        return costWeightGradRelation;
+    }
+    private Double getNeuronCostGradientRelation(Connection connection, Neuron currentNeuron, boolean isHiddenLayer){
+        //dC0/daL-1 = dzL/daL-1 * daL/dzL * dC0L/daL   
+        double biasValue;
+        double previousNeuronValue = connection.getSource().getValue();
+        double zValue = connection.getWeight() * previousNeuronValue * biasValue;
+        double neuronValue = currentNeuron.getValue();
+        double expectedNeuronValue = getExpectedValue(currentNeuron);
+        double costNeuronGradRelation;
+        double neuronZGradRelation;
+        double zPreviousNeuronGradRelation;
+        double costPreviousNeuronGradRelation;
+                if(isHiddenLayer) {
+        costNeuronGradRelation = previousNeuronValue;
+                } else {
+        costNeuronGradRelation;                 
+                }
+        zPreviousNeuronGradRelation = previousNeuronValue;
+        neuronZGradRelation = sig(zValue);
         
-        double divNeuron = 0.0;
-        double wantedResult = 1.0;
-        double divCost = divNeuron - wantedResult;
-        double divz;
-        double divWeight;
-        double divPreviousNeuron;
-        double divBias = layer.getBiasNeuron();
+        costPreviousNeuronGradRelation = zPreviousNeuronGradRelation * neuronZGradRelation * costNeuronGradRelation;
+        
+        return costPreviousNeuronGradRelation;
     }
     
-    private Double getWantedChangeForPreviousNeuron(){
-        //dC0/daL-1 = dzL/daL-1 * daL/dzL * dC0L/daL
-        double divNeuron = 0.0;
-        double wantedResult = 1.0;
-        double divCost = 2*(divNeuron - wantedResult);
-        double divz;
-        double divWeight;
-        double divPreviousNeuron;    
-        double divBias = layer.getBiasNeuron();
-    }
-    
-    private Double getWantedChangeForBias(){
-        //dC0/dbL = dzL/dbL * daL/dzL * dC0L/daL
-        double divNeuron = 0.0;
-        double wantedResult = 1.0;
-        double divCost = 2*(divNeuron - wantedResult);
-        double divz;
-        double divWeight;
-        double divPreviousNeuron;   
-        double divBias = layer.getBiasNeuron();
-    }
-    
-    private int getExpectedOutput(int positionInLayer){
-        return test.getExpectedOutputAtIndex(positionInLayer);
+     private Double getBiasCostGradientRelation(Connection connection, Neuron currentNeuron, Layer layer, boolean isHiddenLayer){
+        //dC0/dbL = dzL/dbL * daL/dzL * dC0L/daL        
+        double biasValue;
+        double previousNeuronValue = connection.getSource().getValue();
+        double zValue = connection.getWeight() * previousNeuronValue * biasValue;
+        double neuronValue = currentNeuron.getValue();
+        double expectedNeuronValue = getExpectedValue(currentNeuron);
+        double costNeuronGradRelation;
+        double neuronZGradRelation;
+        double costBiasGradRelation;
+                
+         if(isHiddenLayer) {
+        costNeuronGradRelation = previousNeuronValue;
+                } else {
+        costNeuronGradRelation;                
+                }
+        
+        neuronZGradRelation = sig(zValue);
+        costBiasGradRelation = neuronZGradRelation * costNeuronGradRelation;
+        
+        return costBiasGradRelation;
     }
     
     private List<Double> getChangesForWeights(Layer layer){
         List<Double> weights = new ArrayList<>();
         for(Neuron neuron : layer.getNeurons()){
             weights.add(0.0);
-            for(Connection connection : neuron.getConnections()){
-                weights.set(weights.size()-1, getWantedChangeForWeight(connection, neuron) * getCost(neuron, layer.getNeurons().indexOf(neuron)));
-            }
+            boolean isHiddenLayer;
+            /*for(Connection connection : neuron.getConnections()){
+                weights.set(weights.size()-1, getWeightCostGradientRelation(connection, neuron, layer, isHiddenLayer) * getCostForWeight(neuron, layer.getNeurons().indexOf(neuron)));
+            }*/
             weights.set(weights.size()-1, weights.get(weights.size() -1) / neuron.getConnections().size());
         }
         return weights;
+    }
+    
+    private List<Double> getChangeForPreviousNeuron(Neuron currentNeuron, Neuron previousNeuron) {
+        //return getWantedChangeForPreviousNeuron() * getCostForPreviousNeuron();
+    }
+    
+    private double getExpectedValue(Neuron neuron){
+        
+    }
+    
+    private double sig(Double z) {
+        return 0.0;
+        //return Math.ln(z/(1-z));
     }
 }

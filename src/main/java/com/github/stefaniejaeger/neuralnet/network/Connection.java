@@ -26,6 +26,14 @@ public class Connection {
     public void setWeight(Double weight) {
         this.weight = weight;
     }
+    
+    public Neuron getSource() {
+        return from;
+    }
+    
+    public double getWeight() {
+        return weight;
+    }
 
     @Override
     public String toString() {

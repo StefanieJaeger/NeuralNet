@@ -2,6 +2,7 @@ package com.github.stefaniejaeger.neuralnet.network;
 
 import com.github.stefaniejaeger.neuralnet.network.layer.HiddenLayer;
 import com.github.stefaniejaeger.neuralnet.network.layer.InputLayer;
+import com.github.stefaniejaeger.neuralnet.network.layer.Layer;
 import com.github.stefaniejaeger.neuralnet.network.layer.OutputLayer;
 import com.github.stefaniejaeger.neuralnet.network.neuron.BiasNeuron;
 import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
@@ -90,7 +91,19 @@ public class NeuralNet {
             connections.get(i).setWeight(weights.get(i));
         }
     }
-
+    
+    public InputLayer getInputLayer() {
+        return inputLayer;
+    }
+    
+    public List<HiddenLayer> getHiddenLayers() {
+        return hiddenLayers;
+    }
+    
+    public OutputLayer getOutputLayer() {
+        return outputLayer;
+    }
+        
     /**
      * Let's the whole net calculate the output, then rounds to 0 or 1
      * @param inputs
