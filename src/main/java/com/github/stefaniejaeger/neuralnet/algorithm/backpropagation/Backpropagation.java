@@ -29,7 +29,7 @@ public class Backpropagation {
     }
     
     /**
-     * Finds changes for weights, biases and neurons in neural net to help it get closer to result
+     * Finds changes for weights and biases in neural net to help it get closer to result
      * @param tests
      * @return Object with new values for weights, biases and neurons
      */
@@ -75,8 +75,8 @@ public class Backpropagation {
     }
     
     /**
-     * Calculate the average change for every single weight, bias and 
-     * neuron from the changes every test wants
+     * Calculate the average change for every single weight and bias from 
+     * the changes every test wants
      * @return 
      */
     private ChangesForTest getFinalChangesForAllTest(){
@@ -86,16 +86,13 @@ public class Backpropagation {
         
         List<Double> weights = new ArrayList<>();
         List<Double> biases = new ArrayList<>();
-        List<Double> neurons = new ArrayList<>();
         
         int weightCounter = 0;
         int biasCounter = 0;
-        int neuronCounter = 0;
         
         for(ChangesForTest change : changesAndTest){
             weightCounter = 0;
             biasCounter = 0;
-            neuronCounter = 0;
             
             for(double weightChange : change.getWeightChanges()){
                 weights.set(weightCounter, weights.get(weightCounter) + weightChange);
@@ -105,10 +102,6 @@ public class Backpropagation {
                 biases.set(biasCounter, biases.get(biasCounter) + biasChange);
                 biasCounter++;
             }
-            for(double neuronChange : change.getNeuronChanges()){
-                neurons.set(neuronCounter, neurons.get(neuronCounter) + neuronChange);
-                neuronCounter++;
-            }
         }       
         
         for(int i = 0; i < weights.size(); i++){
@@ -117,26 +110,22 @@ public class Backpropagation {
         for(int i = 0; i < biases.size(); i++){
             biases.set(i, biases.get(i) / biasCounter);
         }
-        for(int i = 0; i < neurons.size(); i++){
-            neurons.set(i, neurons.get(i) / neuronCounter);
-        }
         
         average.setWeightChanges(weights);
         average.setBiasChanges(biases);
-        average.setNeuronChanges(neurons);
         
         return average;
     }
     
     /**
-     * The cost for a neuron is the difference between the expected output 
+     * The cost is the difference between the expected output 
      * and actual output. We square it to eliminate negative values
      * @param neuron The neuron whose cost we want
-     * @param positionInLayer The position in its layer let's us get
      * its expected output (only works for output neurons)
+     * @param layer 
      * @return 
      */
-    private Double getCostForWeight(Neuron neuron, Layer layer) {
+    private Double getCost(Neuron neuron, Layer layer) {
         int expectedOutput = (int)getExpectedValue(neuron, layer);
         Double output = neuron.getValue();
         return (expectedOutput - output) * (expectedOutput - output);
@@ -212,9 +201,11 @@ public class Backpropagation {
     private List<Double> getChangeForWeights(Layer layer, boolean isHiddenLayer) {
         List<Double> weights = new ArrayList<>();
         for(Neuron neuron : layer.getNeurons()) {
+            //TODO find how to define cost for non-output layers
+            double cost = getCost(neuron, layer);
             weights.add(0.0);
             for(Connection connection : neuron.getConnections()) {            
-                double newWeightValue = getWeightAndCostDerivativeRelation(connection, neuron, layer, isHiddenLayer) * getCostForWeight(neuron, layer);
+                double newWeightValue = getWeightAndCostDerivativeRelation(connection, neuron, layer, isHiddenLayer) * cost;
                 weights.set(weights.size()-1, newWeightValue);
             }
             weights.set(weights.size()-1, weights.get(weights.size() -1) / neuron.getConnections().size());
@@ -222,13 +213,21 @@ public class Backpropagation {
         return weights;
     }
     
+    /**
+     * Get the changes for the bias in the specified layer
+     * @param layer
+     * @param isHiddenLayer
+     * @return 
+     */
     private Double getChangeForBias(Layer layer, boolean isHiddenLayer){
         List<Double> biases = new ArrayList<>();
         double bias;
         for(Neuron neuron : layer.getNeurons()) {
+            //TODO find how to define cost for non-hidden layers
+            double cost = getCost(neuron, layer);
             biases.add(0.0);
             for(Connection connection : neuron.getConnections()) {            
-                double newBiasValue = getBiasAndCostDerivativeRelation(connection, neuron, layer, isHiddenLayer) * getCostForWeight(neuron, layer);
+                double newBiasValue = getBiasAndCostDerivativeRelation(connection, neuron, layer, isHiddenLayer) * cost;
                 // Add up every change every connection wants to make
                 biases.set(biases.size()-1, newBiasValue);
             }

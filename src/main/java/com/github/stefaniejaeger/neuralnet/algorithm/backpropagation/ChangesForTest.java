@@ -15,7 +15,6 @@ import java.util.List;
 public class ChangesForTest {
     List<Double> weightChanges;
     List<Double> biasChanges;
-    List<Double> neuronChanges;
     Test test;
     
     public ChangesForTest(Test test) {
@@ -29,10 +28,6 @@ public class ChangesForTest {
     public void setBiasChanges(List<Double> changes) {
         weightChanges = changes;
     }
-    
-    public void setNeuronChanges(List<Double> changes) {
-        weightChanges = changes;
-    }
         
     public Test getTest() {
         return test;
@@ -44,9 +39,5 @@ public class ChangesForTest {
     
     public List<Double> getBiasChanges() {
         return biasChanges;
-    }
-    
-    public List<Double> getNeuronChanges() {
-        return neuronChanges;        
     }
 }
