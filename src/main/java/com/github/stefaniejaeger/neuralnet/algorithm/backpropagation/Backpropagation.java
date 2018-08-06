@@ -69,7 +69,7 @@ public class Backpropagation {
             biases.add(getChangeForBias(hiddenLayer, true));
         }
         
-        changesForTest.setWeightChanges(biases);
+        changesForTest.setBiasChanges(biases);
         
         return changesForTest;
     }
