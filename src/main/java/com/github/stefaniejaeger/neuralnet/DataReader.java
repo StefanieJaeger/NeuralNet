@@ -82,18 +82,16 @@ public class DataReader {
     }
     
     private List<Double> getDataItemsFromLine(String line) {
-        List<String> items = Arrays.asList(line.split(","));
         List<Double> dataItems = new ArrayList<>();
-        for (String item : items) {
+        for (String item : line.split(",")) {
             dataItems.add(Double.parseDouble(item));
         }
         return dataItems;
     }
     
     private List<Integer> getResultItemsFromLine(String line) {
-        List<String> items = Arrays.asList(line.split(","));
         List<Integer> resultItems = new ArrayList<>();
-        for (String item : items) {
+        for (String item : line.split(",")) {
             resultItems.add(Integer.parseInt(item));
         }
         return resultItems;        

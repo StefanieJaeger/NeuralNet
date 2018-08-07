@@ -34,12 +34,12 @@ public class HiddenNeuron extends Neuron {
 
     @Override
     public String toString() {
-        String text = "hidden neuron with ";
+        StringBuilder text = new StringBuilder("hidden neuron with ");
         for (Connection con : incomingConnections) {
-            text += con.toString() + ", ";
+            text.append(con.toString()).append(", ");
         }
-        text += "making its value " + getValue();
-        return text;
+        text.append("making its value ").append(getValue());
+        return text.toString();
     }
 
 }

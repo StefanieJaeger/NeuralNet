@@ -34,11 +34,11 @@ public class OutputNeuron extends Neuron {
 
     @Override
     public String toString() {
-        String text = "output neuron has ";
+        StringBuilder text = new StringBuilder("output neuron has ");
         for(Connection con : incomingConnections)
-            text += con.toString() + ", ";
-        text += '\n'+" making its value " + getValue();
-        return text;
+            text.append(con.toString()).append(", ");
+        text.append("\n making its value ").append(getValue());
+        return text.toString();
     }
 
 }
