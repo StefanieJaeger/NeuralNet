@@ -1,250 +1,249 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="14.2">
-  <zoom_level>12</zoom_level>
+  <zoom_level>7</zoom_level>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>192</x>
-      <y>240</y>
-      <w>192</w>
-      <h>132</h>
+      <x>0</x>
+      <y>49</y>
+      <w>224</w>
+      <h>119</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.neuron&gt;
+&lt;&lt;abstract&gt;&gt;
 Neuron
 --
--value: double
+- value: double
 --
 + getValue(): double
-+ calculateValue()</panel_attributes>
+- &lt;abstract&gt; calculateValue(): double
++ reset()
++ addConnection(connection: Connection)
++ getConnections(): List&lt;Connection&gt;</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>408</x>
-      <y>240</y>
-      <w>384</w>
-      <h>132</h>
+      <x>756</x>
+      <y>392</y>
+      <w>217</w>
+      <h>140</h>
     </coordinates>
-    <panel_attributes>Connection
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.network&gt;
+Connection
 --
 - weight: double
 - from: Neuron
 --
 + Connection(weight: double, from: Neuron)
-+ calculateOutput(): double</panel_attributes>
++ Connection(from: Neuron)
++ calculateOutput(): double
++ getWeight(): double
++ setWeight(weight: double)
++ getSource(): Neuron
++ toString(): string</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>816</x>
-      <y>240</y>
-      <w>252</w>
-      <h>132</h>
+      <x>350</x>
+      <y>49</y>
+      <w>280</w>
+      <h>84</h>
     </coordinates>
-    <panel_attributes>&lt;&lt;abstract&gt;&gt;
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.layer&gt;
+&lt;&lt;interface&gt;&gt;
 Layer
 --
 - neurons: List&lt;Neuron&gt;
 --
-+ getNeurons(): List&lt;Neron&gt;</panel_attributes>
++ getNeurons(): List&lt;Neron&gt;
++ getBiasNeuron(): BiasNeuron</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>576</y>
-      <w>252</w>
-      <h>72</h>
+      <y>182</y>
+      <w>224</w>
+      <h>91</h>
     </coordinates>
-    <panel_attributes>InputNeuron
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.neuron&gt;
+InputNeuron
 --
-+ setValue(input: double)</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>156</x>
-      <y>360</y>
-      <w>156</w>
-      <h>240</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>110.0;10.0;10.0;180.0</additional_attributes>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>0</x>
-      <y>804</y>
-      <w>528</w>
-      <h>108</h>
-    </coordinates>
-    <panel_attributes>HiddenNeuron
---
-- bias: double
-- incommingConnections: List&lt;Connection&gt;
---
-+ HiddenNeuron(bias: double, connections: List&lt;Connection&gt;)</panel_attributes>
++ setValue(input: double)
++ calculateValue(): double
++ addConnection(connection: Connection)
++ getConnections(): List&lt;Connections&gt;
++ toString(): string</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
       <x>0</x>
-      <y>684</y>
-      <w>420</w>
-      <h>96</h>
+      <y>420</y>
+      <w>231</w>
+      <h>119</h>
     </coordinates>
-    <panel_attributes>OutputNeuron
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.neuron&gt;
+HiddenNeuron
 --
 - incommingConnections: List&lt;Connection&gt;
 --
-+ OutputNeuron(connections: List&lt;Connection&gt;)</panel_attributes>
++ HiddenNeuron()
++ calculateValue(): double
++ getNumberOfIncomingConnections(): int
++ addConnection(connection: Connection)
++ getConnections(): List&lt;Connections&gt;
++ toString(): string</panel_attributes>
     <additional_attributes/>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>264</x>
-      <y>360</y>
-      <w>84</w>
-      <h>348</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>50.0;10.0;10.0;270.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>372</x>
-      <y>360</y>
-      <w>132</w>
-      <h>468</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;90.0;370.0</additional_attributes>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>492</x>
-      <y>516</y>
-      <w>312</w>
-      <h>84</h>
+      <x>0</x>
+      <y>287</y>
+      <w>224</w>
+      <h>119</h>
     </coordinates>
-    <panel_attributes>InputLayer
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.neuron&gt;
+OutputNeuron
+--
+- incommingConnections: List&lt;Connection&gt;
+--
++ OutputNeuron()
++ calculateValue(): double
++ getNumberOfIncomingConnections(): int
++ addConnection(connection: Connection)
++ getConnections(): List&lt;Connections&gt;
++ toString(): string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>147</y>
+      <w>280</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.layer&gt;
+InputLayer
+--
+- biasNeuron: BiasNeuron
+- inputNeurons: List&lt;InputNeuron&gt;
+--
++ InputLayer(biasNeuron: BiasNeuron, numberOfNeurons: int)
++ getNeurons(): List&lt;Neuron&gt;
++ getInputNeurons(): List&lt;InputNeuron&gt;
++ getBiasNeuron(): BiasNeuron</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>385</y>
+      <w>329</w>
+      <h>119</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.layer&gt;
+HiddenLayer
+--
+- biasNeuron: BiasNeuron
+- hiddenNeurons: List&lt;HiddenNeuron&gt;
+--
++ HiddenLayer(biasNeuron: BiasNeuron, neurons: List&lt;HiddenNeuron&gt;)
++ HiddenLayer(biasNeuron: BiasNeuron, numberOfNeurons: int)
++ getNeurons(): List&lt;Neuron&gt;
++ getHiddenNeurons(): List&lt;HiddenNeuron&gt;
++ getBiasNeuron(): BiasNeuron</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>350</x>
+      <y>273</y>
+      <w>280</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.layer&gt;
+OutputLayer
+--
+- outputNeurons: List&lt;OutputNeuron&gt;
 --
 + InputLayer(numberOfNeurons: int)
-+ setInputs(inputs: List&lt;double&gt;)</panel_attributes>
++ getNeurons(): List&lt;Neuron&gt;
++ getOutputNeurons(): List&lt;OutputNeuron&gt;
++ getBiasNeuron(): BiasNeuron</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>828</x>
-      <y>516</y>
-      <w>444</w>
-      <h>84</h>
+      <x>756</x>
+      <y>273</y>
+      <w>273</w>
+      <h>105</h>
     </coordinates>
-    <panel_attributes>HiddenLayer
---
-+ HiddenLayer(numberOfNeurons: int, bias: double)</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1296</x>
-      <y>516</y>
-      <w>336</w>
-      <h>84</h>
-    </coordinates>
-    <panel_attributes>OutputLayer
---
-+ OutputLayer(numberOfNeurons: int)
-+ getOutputs(): List&lt;double&gt;</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1752</x>
-      <y>240</y>
-      <w>348</w>
-      <h>132</h>
-    </coordinates>
-    <panel_attributes>NeuralNetConfiguration
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.network&gt;
+NeuralNetConfiguration
 --
 + numberOfInputNeurons: int
 + numberOfNeuronsPerHiddenLayer: int
 + numberOfOutputNeurons: int
 + numberOfHiddenLayers: int
 + bias: double
-</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <id>UMLClass</id>
-    <coordinates>
-      <x>1092</x>
-      <y>240</y>
-      <w>636</w>
-      <h>132</h>
-    </coordinates>
-    <panel_attributes>NeuralNet
 --
-+ NeuralNet(configuration: NeuralNetConfiguration, weights: List&lt;Double&gt;)
-- connect()
-+ calculateOutputs(inputs: List&lt;double&gt;)
++ getRequiredNumberOfWeights(): int
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
-    <id>Relation</id>
+    <id>UMLClass</id>
     <coordinates>
-      <x>636</x>
-      <y>360</y>
-      <w>300</w>
-      <h>180</h>
+      <x>756</x>
+      <y>49</y>
+      <w>455</w>
+      <h>210</h>
     </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>230.0;10.0;10.0;130.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>936</x>
-      <y>360</y>
-      <w>432</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>10.0;10.0;340.0;130.0</additional_attributes>
-  </element>
-  <element>
-    <id>Relation</id>
-    <coordinates>
-      <x>900</x>
-      <y>360</y>
-      <w>48</w>
-      <h>180</h>
-    </coordinates>
-    <panel_attributes>lt=&lt;-</panel_attributes>
-    <additional_attributes>20.0;10.0;10.0;130.0</additional_attributes>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.network&gt;
+NeuralNet
+--
+- inputLayer: InputLayer
+- hiddenLayers: List&lt;HiddenLayer&gt;
+- outputLayer: OutputLayer
+- connections: List&lt;Connection&gt;
+- configuration: NeuralNetConfiguration
+--
++ NeuralNet(configuration: NeuralNetConfiguration)
+- createBiasNeuron(): BiasNeuron
+- connect(firstListOfNeurons: List&lt;? extends Neuron&gt;, secondListOfNeurons: List&lt;? extends Neuron&gt;)
+- connectLayers()
++ setWeights(weights: List&lt;double&gt;)
++ getConnections(): List&lt;Connection&gt;
++ getConnectionsFromNeuron(neuron: Neuron): List&lt;Connection&gt;
++ clone(): NeuralNet
++ calculateOutputs(inputs: List&lt;double&gt;)
++ resetNetwork()
+</panel_attributes>
+    <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1716</x>
-      <y>516</y>
-      <w>252</w>
-      <h>228</h>
+      <x>1743</x>
+      <y>49</y>
+      <w>483</w>
+      <h>266</h>
     </coordinates>
-    <panel_attributes>GenAlgorithm
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+GeneticAlgorithm
 --
 - population: List&lt;Genome&gt;
 - newPopulation: List&lt;Genome&gt;
@@ -252,30 +251,355 @@ Layer
 - crossoverRate: double
 - mutationRate: double
 - network: NeuralNet
+- rouletteWheel: RouletteWheel
+- winner: List&lt;Genome&gt;
+- writer: PrintWriter
+- provider: RandomProvider
 --
-+ GenAlgorithm(network: NeuralNet, crossoverRate: double, mutationRate: double)
++ GenAlgorithm(geneticAlgorithmConfiguration: GeneticAlgorithmConfiguration, provider: RandomProvider)
+- initializePopulation(size: int, chromosomeLength: int)
++ makeNextGeneration()
 - populateRouletteWheel()
-- chooseMomAndDad()
-- makeBabies()
-- mutate()
-- crossover()
-+ getOutputs(inputs: List&lt;Double&gt;, outputs: List&lt;Double&gt;)
+- getMomAndDad(): List&lt;Genome&gt;
+- makeBabies(mom: Genome, dad: Genome)
+- mutate(genome: Genome)
++ testPrintAndScorePopulation(testCases: List&lt;Test&gt;)
+- getPopulationAverageFitness(): double
++ isDone(): boolean</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1743</x>
+      <y>434</y>
+      <w>252</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+Genome
+--
+- fitness: double
+- chromosome: Chromosome
+--
++ Genome(chromosome: Chromosome)
++ getFitness(): double
++ setFitness(value: double)
++ increaseFitness()
++ getChromosome(): Chromosome
++ setChromosome(chromosome: Chromosome)
++ toString(): string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1316</x>
+      <y>259</y>
+      <w>273</w>
+      <h>154</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet&gt;
+DataReader
+--
+- filePath: string
+- trainingData: List&lt;List&lt;Double&gt;&gt;
+- expectedResults: List&lt;List&lt;Integer&gt;&gt;
+--
++ DataReader(path: stirng)
++ getTestData(): List&lt;Test&gt;
++ getTrainingData(): List&lt;List&lt;Double&gt;&gt;
++ getExpectedResults(): List&lt;List&lt;Integer&gt;&gt;
+- readFileContent()
+- getDataItemsFromLine(line: string): List&lt;Double&gt;
+- getResultItemsFromLine(line: string): List&lt;Integer&gt;</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1316</x>
+      <y>49</y>
+      <w>273</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet&gt;
+Starter
+--
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <id>UMLClass</id>
     <coordinates>
-      <x>1452</x>
-      <y>672</y>
-      <w>252</w>
-      <h>228</h>
+      <x>1316</x>
+      <y>126</y>
+      <w>273</w>
+      <h>119</h>
     </coordinates>
-    <panel_attributes>Genome
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet&gt;
+Test
 --
-- fitness: double
+- inputs: List&lt;Double&gt;
+- expectedOutputs: List&lt;Integer&gt;
 --
-+ getFitness(): double</panel_attributes>
++ Test(List&lt;Double&gt; inputs, List&lt;Integer&gt; expectedOutputs)
++ isOutputCorrect(List&lt;Integer&gt; outputs): boolean
++ getInputs(): List&lt;Double&gt;
++ getExpectedOutputs(): List&lt;Integer&gt;
++ toString(): string</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1743</x>
+      <y>329</y>
+      <w>252</w>
+      <h>91</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+GeneticAlgorithmConfiguration
+--
++ neuralNet: NeuralNet
++ crossoverRate: double
++ mutationRate: double
+- chromosomeLength: int
+- populationSize: int
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1743</x>
+      <y>588</y>
+      <w>252</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+Chromosome
+--
+- dna: List&lt;Molecule&gt;
+--
++ Chromosome(another: Chromosome)
++ Chromosome(dna: List&lt;Molecule&gt;)
++ crossover(index: int, otherChromosome: Chromosome)
++ getDNA(): List&lt;Molecule&gt;
++ toString(): string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2016</x>
+      <y>441</y>
+      <w>259</w>
+      <h>77</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+&lt;&lt;interface&gt;&gt;
+RandomProvider
+--
++ getDoubleInRange(start: double, end: double): double
++ getIntegerInRange(start: int, end: int): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2016</x>
+      <y>329</y>
+      <w>259</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+RouletteWheel&lt;FieldType&gt;
+--
+- randomProvider: RandomProvider
+- fields: List&lt;FieldType&gt;
+--
++ RouletteWheel(provider: RandomProvider)
++ add(element: FieldType)
++ getRandomElement(): FieldType</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2016</x>
+      <y>532</y>
+      <w>259</w>
+      <h>63</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+RealRandomProvider
+--
++ getDoubleInRange(start: double, end: double): double
++ getIntegerInRange(start: int, end: int): int</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>1743</x>
+      <y>714</y>
+      <w>252</w>
+      <h>112</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.genetic&gt;
+Molecule
+--
+- value: double
+--
++ Molecule(molecule: Molecule)
++ Molecule(value: double)
++ getValue(): double
++ mutate(randomProvider: RandomProvider)
++ toString(): string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>553</y>
+      <w>231</w>
+      <h>105</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.neuron&gt;
+BiasNeuron
+--
++ BiasNeuron(bias: double)
++ calculateValue(): double
++ reset()
++ addConnection(connection: Connection)
++ getConnections(): List&lt;Connections&gt;
++ toString(): string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>0</x>
+      <y>672</y>
+      <w>343</w>
+      <h>49</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.neuron.common&gt;
+Helper
+--
++ calculateNeuronValue(incommingConnections: List&lt;Connection&gt;): double</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>UMLClass</id>
+    <coordinates>
+      <x>2373</x>
+      <y>49</y>
+      <w>308</w>
+      <h>126</h>
+    </coordinates>
+    <panel_attributes>&lt;com.github.stefaniejaeger.neuralnet.algorithm.backpropagation&gt;
+Backpropagation
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>623</x>
+      <y>112</y>
+      <w>112</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;80.0;10.0;80.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>2268</x>
+      <y>483</y>
+      <w>112</w>
+      <h>98</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;120.0;10.0;120.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>623</x>
+      <y>112</y>
+      <w>112</w>
+      <h>189</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;250.0;10.0;250.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>616</x>
+      <y>105</y>
+      <w>70</w>
+      <h>294</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;implements&gt;&gt;</panel_attributes>
+    <additional_attributes>20.0;20.0;70.0;20.0;70.0;400.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>217</x>
+      <y>63</y>
+      <w>98</w>
+      <h>147</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;190.0;10.0;190.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>217</x>
+      <y>63</y>
+      <w>98</w>
+      <h>252</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;340.0;10.0;340.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>217</x>
+      <y>63</y>
+      <w>98</w>
+      <h>385</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;530.0;20.0;530.0</additional_attributes>
+  </element>
+  <element>
+    <id>Relation</id>
+    <coordinates>
+      <x>217</x>
+      <y>63</y>
+      <w>98</w>
+      <h>518</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;-
+&lt;&lt;extends&gt;&gt;</panel_attributes>
+    <additional_attributes>10.0;10.0;60.0;10.0;60.0;720.0;20.0;720.0</additional_attributes>
   </element>
 </diagram>
