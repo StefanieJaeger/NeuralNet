@@ -1,9 +1,13 @@
 package com.github.stefaniejaeger.neuralnet.network.neuron;
 
 import com.github.stefaniejaeger.neuralnet.network.Connection;
+import com.github.stefaniejaeger.neuralnet.network.neuron.InputNeuron;
+import com.github.stefaniejaeger.neuralnet.network.neuron.common.Helper;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.mockito.Mockito;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
