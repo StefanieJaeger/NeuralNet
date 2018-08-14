@@ -16,8 +16,8 @@ public class HiddenNeuronTest {
         double weight2 = 0.63;
         InputNeuron neuron1 = new InputNeuron();
         InputNeuron neuron2 = new InputNeuron();
-        neuron1.setValue(1);
-        neuron2.setValue(0);
+        neuron1.setValue(1.0);
+        neuron2.setValue(0.0);
         List<Connection> connections = new ArrayList<>();
         connections.add(new Connection(weight1, neuron1));
         connections.add(new Connection(weight2, neuron2));
