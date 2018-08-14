@@ -12,7 +12,22 @@ public class OutputNeuronTest {
     @Ignore
     @Test
     public void calculateValue() {
-        // TODO
+        double weight1 = 0.81;
+        double weight2 = 0.63;
+        InputNeuron neuron1 = new InputNeuron();
+        InputNeuron neuron2 = new InputNeuron();
+        neuron1.setValue(1);
+        neuron2.setValue(0);
+        List<Connection> connections = new ArrayList<>();
+        connections.add(new Connection(weight1, neuron1));
+        connections.add(new Connection(weight2, neuron2));
+        Helper helper = new Helper();
+
+        double result = helper.calculateNeuronValue(connections);
+        double e = (neuron1.getValue() * weight1 + neuron2.getValue() * weight2)
+        double expectedResult = (e / (1 + Math.abs(e)) - 0.5) * 2;
+
+        assertEquals(expectedResult, result);
     }
 
     @Test
