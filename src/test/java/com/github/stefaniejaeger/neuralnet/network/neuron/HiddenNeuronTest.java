@@ -24,7 +24,7 @@ public class HiddenNeuronTest {
         Helper helper = new Helper();
 
         double result = helper.calculateNeuronValue(connections);
-        double e = (neuron1.getValue() * weight1 + neuron2.getValue() * weight2)
+        double e = (neuron1.getValue() * weight1 + neuron2.getValue() * weight2);
         double expectedResult = (e / (1 + Math.abs(e)) - 0.5) * 2;
 
         assertEquals(expectedResult, result);
