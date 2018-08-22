@@ -22,10 +22,12 @@ public class Backpropagation {
     private NeuralNet network;
     private Test currentTest;
     private List<ChangesForTest> changesAndTest;
+    private double learningRate;
     
     public Backpropagation(NeuralNet net) {
         network = net;
         changesAndTest = new ArrayList<>();
+        learningRate = 0.2;
     }
     
     /**
@@ -95,11 +97,11 @@ public class Backpropagation {
             biasCounter = 0;
             
             for(double weightChange : change.getWeightChanges()){
-                weights.set(weightCounter, weights.get(weightCounter) + weightChange);
+                weights.set(weightCounter, weights.get(weightCounter) + (weightChange * learningRate));
                 weightCounter++;
             }
             for(double biasChange : change.getBiasChanges()){
-                biases.set(biasCounter, biases.get(biasCounter) + biasChange);
+                biases.set(biasCounter, biases.get(biasCounter) + (biasChange * learningRate));
                 biasCounter++;
             }
         }       
