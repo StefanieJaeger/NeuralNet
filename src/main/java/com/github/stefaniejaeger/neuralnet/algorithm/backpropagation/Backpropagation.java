@@ -234,7 +234,7 @@ public class Backpropagation {
             // Get the average change every connection of a neuron wants to make
             biases.set(biases.size()-1, biases.get(biases.size() -1) / neuron.getConnections().size());
         }
-        bias = biases.stream().mapToInt(Integer::intValue).sum();
+        bias = biases.stream().mapToDouble(Double::doubleValue).sum();
         return bias / biases.size();
     }
     
