@@ -1,5 +1,6 @@
 package com.github.stefaniejaeger.neuralnet;
 
+import com.github.stefaniejaeger.neuralnet.algorithm.backpropagation.Backpropagation;
 import com.github.stefaniejaeger.neuralnet.algorithm.genetic.GeneticAlgorithm;
 import com.github.stefaniejaeger.neuralnet.algorithm.genetic.GeneticAlgorithmConfiguration;
 import com.github.stefaniejaeger.neuralnet.algorithm.genetic.RandomProvider;
@@ -7,6 +8,8 @@ import com.github.stefaniejaeger.neuralnet.algorithm.genetic.RealRandomProvider;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNet;
 import com.github.stefaniejaeger.neuralnet.network.NeuralNetConfiguration;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -28,29 +31,19 @@ public class StarterBackpropagationXOR {
         netConfig.bias = 1;
         NeuralNet net = new NeuralNet(netConfig);
         
-        GeneticAlgorithmConfiguration algConfig = new GeneticAlgorithmConfiguration();
-        algConfig.chromosomeLengthOfGenome = netConfig.getRequiredNumberOfWeights();
-        algConfig.crossoverRate = 0.7;
-        algConfig.mutationRate = 0.1;
-        algConfig.neuralNet = net;
-        algConfig.populationSize = 200;
-
         DataReader dataReader = new DataReader("./SmileyData.txt");
-        List<Test> testCases = dataReader.getTestData();
+        List<Test> testCases = new ArrayList<>();
 
-        RandomProvider randomProvider = new RealRandomProvider();
+        testCases.add(new Test(Arrays.asList(0.0, 0.0), Arrays.asList(1)));
+        testCases.add(new Test(Arrays.asList(0.0, 1.0), Arrays.asList(0)));
+        testCases.add(new Test(Arrays.asList(1.0, 0.0), Arrays.asList(0)));
+        testCases.add(new Test(Arrays.asList(1.0, 1.0), Arrays.asList(1)));
 
-        //genetic algorithm with crossoverRate 0.7, mutationRate 0.1, population count 10 and chromosome count per genome
-        GeneticAlgorithm genAlg = new GeneticAlgorithm(algConfig, randomProvider);
+        Backpropagation back = new Backpropagation(net);
+
+        back.propagate(testCases);
         
-        genAlg.testPrintAndScorePopulation(testCases);
-        
-        while(!genAlg.isDone()){
-            genAlg.makeNextGeneration();
-            genAlg.testPrintAndScorePopulation(testCases);
-        }
-        System.out.println(genAlg.winner);
-        genAlg.writer.close();
+
     }
 
 }
