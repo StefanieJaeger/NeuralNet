@@ -1,4 +1,4 @@
 package com.github.stefaniejaeger.neuralnet;
 
-public class StarterBackpropagationXOR {
+public class StarterGeneticSmiley {
 }
