@@ -13,6 +13,7 @@ import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -24,10 +25,10 @@ public class Backpropagation {
     private List<ChangesForTest> changesAndTest;
     private double learningRate;
     
-    public Backpropagation(NeuralNet net) {
+    public Backpropagation(NeuralNet net, double learningRate) {
         network = net;
         changesAndTest = new ArrayList<>();
-        learningRate = 0.2;
+        this.learningRate = learningRate;
     }
     
     /**
@@ -41,7 +42,7 @@ public class Backpropagation {
             try {
             changesAndTest.add(propagateForTest(test));
             } catch (CloneNotSupportedException cE) {
-                
+                System.out.println(cE.getMessage().toString() + " " + cE.getStackTrace().toString());
             }
         }
         return getFinalChangesForAllTest();
@@ -52,15 +53,22 @@ public class Backpropagation {
      * @param test
      * @return 
      */
-    private ChangesForTest propagateForTest(Test test) throws CloneNotSupportedException {                 
-        //TODO copy network and make changes there. apply changes to last layer,
+    private ChangesForTest propagateForTest(Test test) throws CloneNotSupportedException {
+
+        System.out.println("Propagating for test " + test.toString());
+
+        //TODO copy network and make changes there. apply changes to last layer
         //then go to next layer
-        NeuralNet neuralNet = (NeuralNet)network.clone();
+        //TODO set calculated value for previous neurons in net to use as expected value for hidden neurons
+        NeuralNet neuralNet = network.clone();
+        System.out.println(neuralNet.toString());
         ChangesForTest changesForTest = new ChangesForTest(test);
         
         List<Double> weights = getChangeForWeights(neuralNet.getOutputLayer(), false);
         for(Layer hiddenLayer : neuralNet.getHiddenLayers()) {
-            weights.addAll(getChangeForWeights(hiddenLayer, true));
+            List<Double> changes = getChangeForWeights(hiddenLayer, true);
+            System.out.println("Changing weights to " + changes.stream().map(Object::toString).collect(Collectors.joining(",")));
+            weights.addAll(changes);
         }
         
         changesForTest.setWeightChanges(weights);
@@ -68,7 +76,9 @@ public class Backpropagation {
         
         List<Double> biases = Arrays.asList(getChangeForBias(neuralNet.getOutputLayer(), false));
         for(Layer hiddenLayer : neuralNet.getHiddenLayers()) {
-            biases.add(getChangeForBias(hiddenLayer, true));
+            Double changes = getChangeForBias(hiddenLayer, true);
+            System.out.println("Changing biases to " + changes);
+            biases.add(changes);
         }
         
         changesForTest.setBiasChanges(biases);
@@ -163,7 +173,9 @@ public class Backpropagation {
         neuronAndZDerivativeRelation = derivativeSigmoid(zValue);
         
         costAndWeightDerivativeRelation = zAndWeightDerivativeRelation * neuronAndZDerivativeRelation * costAnNeuronDerivativeRelation;
-        
+
+        System.out.println("Relation of derivative of connection " + connection.getWeight() + " and cost is " + costAndWeightDerivativeRelation);
+
         return costAndWeightDerivativeRelation;
     }
     
@@ -189,7 +201,9 @@ public class Backpropagation {
         neuronAndZDerivativeRelation = derivativeSigmoid(zValue);
         
         costAndBiasDerivativeRelation = zAndWeightDerivativeRelation * neuronAndZDerivativeRelation * costAnNeuronDerivativeRelation;
-        
+
+        System.out.println("Relation of derivative of bias " + biasValue + " and cost is " + costAndBiasDerivativeRelation);
+
         return costAndBiasDerivativeRelation;
     }
 
@@ -257,6 +271,7 @@ public class Backpropagation {
      * @return 
      */
     private int getExpectedValue(Neuron neuron, Layer layer) {
+        //not quite
         int indexOfNeuron = layer.getNeurons().indexOf(neuron);
         return currentTest.getExpectedOutputs().get(indexOfNeuron);
     }
