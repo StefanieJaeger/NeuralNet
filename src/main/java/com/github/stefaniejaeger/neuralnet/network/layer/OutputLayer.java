@@ -3,6 +3,8 @@ package com.github.stefaniejaeger.neuralnet.network.layer;
 import com.github.stefaniejaeger.neuralnet.network.neuron.BiasNeuron;
 import com.github.stefaniejaeger.neuralnet.network.neuron.Neuron;
 import com.github.stefaniejaeger.neuralnet.network.neuron.OutputNeuron;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 /**
  * @author Stefanie
  */
-public class NeuralNet {
+public class NeuralNet implements Cloneable {
 
     private InputLayer inputLayer;
     private List<HiddenLayer> hiddenLayers;

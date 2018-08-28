@@ -1,5 +1,7 @@
 package com.github.stefaniejaeger.neuralnet.algorithm;
 
+import com.github.stefaniejaeger.neuralnet.algorithm.genetic.RandomProvider;
+import com.github.stefaniejaeger.neuralnet.algorithm.genetic.RouletteWheel;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
