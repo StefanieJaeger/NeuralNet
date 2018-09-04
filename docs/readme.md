@@ -50,3 +50,11 @@ Like really really complicated.
 - No? Then you're blind
 - Yes? Good. Cause he good boy
 - Jeremy
+
+## Sources
+
+Wondering where to read up on neural networks, AI and machine learning? 
+Here are the links to some pages I found useful.
+
+- https://www.google.com/AI
+- https://www.ai-junkie.com (requires Flash, go to http://www.ai-junkie.com/ga/intro/gat1.html for genetic algorithm, to http://www.ai-junkie.com/ann/evolved/nnt1.html for neural nets)
