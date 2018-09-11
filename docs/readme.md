@@ -1,4 +1,4 @@
-<link href="css/neural-net.css" rel="stylesheet" type="text/css"></link>
+<link href="css/neural-net.css" rel="stylesheet" type="text/css"/>
 
 # Welcome to this Github Page
 
