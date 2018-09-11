@@ -1,3 +1,5 @@
+<link href="css/neural-net.css" rel="stylesheet" type="text/css"></link>
+
 # Welcome to this Github Page
 
 ## What is this project about?
@@ -77,16 +79,14 @@ Here are the links to some pages I found useful.
 - https://www.google.com/AI
 - https://www.ai-junkie.com (requires Flash, go to http://www.ai-junkie.com/ga/intro/gat1.html for genetic algorithm, to http://www.ai-junkie.com/ann/evolved/nnt1.html for neural nets)
 - https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw (Has great videos on backpropagation)
-- That other one with backprop 
+- http://neuralnetworksanddeeplearning.com/ (For backpropagation mostly)
 - Jeremy Stucki
-- https://stevenmiller888.github.io/mind-how-to-build-a-neural-network/
+- https://stevenmiller888.github.io/mind-how-to-build-a-neural-network/ 
 
 
 
-[network]: 
+[network]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
+[geneticComic]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
+[costCalculation]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
+[backpropComic]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
 
-[geneticComic]: 
-
-[costCalculation]: 
-
-[backpropComic]: 
