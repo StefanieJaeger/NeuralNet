@@ -20,9 +20,14 @@ Now these neurons are connected with the ones in the layers before and after the
 The ultimate goal of *machine learning* is to find the weights, values for the connections between neurons, that produce the correct output for all tests. There are multiple sets of weights that will achieve the goal, we only need to find one.
 
 Here is a picture to try to explain it better:
-[network]
+![network][network]
+
+So to get the value for the top hidden neuron in the first layer:
+Top input neuron * connection to hidden neuron, middle input neuron * connection and bottom input neuron * connection. 
+Keep doing that for all neurons in the hidden layer and then output layer.
 
 ### What is *genetic algorithm*?
+
 In an attempt to explain the process of `genetic algorithm`, I have created a short comic. It should help understanding that part of genetic algorithm, but skips completely over how a neural network actually computes its output.
 
 #### Words
@@ -37,7 +42,7 @@ The whole process ends, when you have discovered a genome that produces the righ
 
 #### Comic
 
-[geneticComic]
+![genetic comic][geneticComic]
 
 
 ### What is *backpropagation*?
@@ -53,7 +58,7 @@ In the same way we change the weights of the neural network just a little. We do
 *Cost*
 The `cost` is a value, describing how bad our network is in getting the right value. Our goal is to minimize the cost. The calculation of the cost is a bit tricky. Here's a picture describing it.
 
-[costCalculation]
+![cost calculation][costCalculation]
 
 *Backpropagation* is a way to apply gradient descent.
 
@@ -61,7 +66,7 @@ For every test we have, we calculate the `changes` the weights need to solve it.
 So Test<sub>1</sub> wants Weight<sub>1</sub> to increase by 0.2 and Weight<sub>2</sub> by 0.4. Test<sub>2</sub> wants Weight<sub>1</sub> to increase 0.1 and Weight<sub>2</sub> decrease by 0.8. So for Weight<sub>1</sub> the change would be (0.2 + 0.1) * learning rate and for Weight<sub>2</sub> (0.4 - 0.8) * learning rate.
 
 #### Comic
-[backpropComic]
+![backprop comic][backpropComic]
 
 ## Who is a good boy?
 - clearly Jeremy
@@ -85,8 +90,7 @@ Here are the links to some pages I found useful.
 
 
 
-[network]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
-[geneticComic]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
-[costCalculation]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
-[backpropComic]: https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png
-
+[network]: assets/networkStructure.jpeg
+[geneticComic]: https://www.squid-lang.org/squid-logo.svg
+[costCalculation]: https://www.squid-lang.org/squid-logo.svg
+[backpropComic]: https://www.squid-lang.org/squid-logo.svg
