@@ -81,12 +81,12 @@ So Test<sub>1</sub> wants Weight<sub>1</sub> to increase by 0.2 and Weight<sub>2
 Wondering where to read up on neural networks, AI and machine learning? 
 Here are the links to some pages I found useful.
 
-- https://www.google.com/AI
-- https://www.ai-junkie.com (requires Flash, go to http://www.ai-junkie.com/ga/intro/gat1.html for genetic algorithm, to http://www.ai-junkie.com/ann/evolved/nnt1.html for neural nets)
-- https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw (Has great videos on backpropagation)
-- http://neuralnetworksanddeeplearning.com/ (For backpropagation mostly)
+- <https://www.google.com/AI>
+- <https://www.ai-junkie.com> (requires Flash, go to <http://www.ai-junkie.com/ga/intro/gat1.html> for genetic algorithm, to <http://www.ai-junkie.com/ann/evolved/nnt1.html> for neural nets)
+- <https://www.youtube.com/channel/UCYO_jab_esuFRV4b17AJtAw> (Has great videos on backpropagation)
+- <http://neuralnetworksanddeeplearning.com/> (For backpropagation mostly)
 - Jeremy Stucki
-- https://stevenmiller888.github.io/mind-how-to-build-a-neural-network/ 
+- <https://stevenmiller888.github.io/mind-how-to-build-a-neural-network/>
 
 
 

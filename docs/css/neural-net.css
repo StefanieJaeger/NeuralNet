@@ -3,6 +3,10 @@
     --control-text-color: #777;
 }
 
+.code {
+    background-color: #E0F2F1!important;
+}
+
 @include-when-export url(https://fonts.googleapis.com/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
 
 @font-face {
@@ -145,6 +149,7 @@ ol,
 dl,
 table{
     margin: 0.8em 0;
+    color: #616161;
 }
 li>ol,
 li>ul {
@@ -276,8 +281,9 @@ tt {
 }
 
 code {
-    background-color: #f3f4f4;
+    background-color: #B39DDB;
     padding: 0 4px 2px 4px;
+    color: #E8EAF6;
 }
 
 .md-fences {
